@@ -17,15 +17,19 @@
 
 /* .code > p */
 .text{
-    width: 92%;
+    padding-left: .5em;
+    width: 87%;
     display: inline-block;
 }
 
 /* .code > div */
 .numbers{
-    color: lightgrey;
-    width: 8%;
+    color: rgb(150,150,150);
+    width: 6%;
     display: inline-block;
+    border-right: 1px solid lightgrey;
+    padding-right: .5em;
+    text-align: right;
     
     -webkit-touch-callout: none;
     -webkit-user-select: none;

@@ -23,31 +23,39 @@ function detect() {
     //^what is the exact meanning of _38???
     
     for (i = 0; i < chat.length; i++) {
-        text[i] = chat[i].getElementsByTagName("p")[0];
+        draw( chat[i].getElementsByTagName("p")[0] )
     }
     //console.log( text, chat );
-    draw( chat ); //really should be text but i'm having issues making text array
+    // for (i = 0; i < chat.length; i++) {
+        // draw( chat[i] ); //really should be text but i'm having issues making text array
+    // }
 }
 
 //takes array of elements containing possible code blocks and edits appropriate ones
 function draw( em ) {
-    for (i = 0; i < em.length; i++) {
-        text = em[i];
-        words = em[i].textContent;
-        var stop_index = words.indexOf(stop);
-        var start_index = words.indexOf(start);
-        console.log( words.indexOf( "\n" ), start_index, stop_index );
+    text = em;
+    words = em.textContent;
+    var stop_index = words.indexOf(stop);
+    var start_index = words.indexOf(start);
+    console.log( words.indexOf( "\n" ), start_index, stop_index );
 
-        if (stop_index > start_index && start_index > -1) {
-                console.log( words.substr(start_index + l, stop_index - start_index - l) );
-            
-            var newtext = words.substr(start_index + l, stop_index - start_index - l);
-            //need to detect returns and replace with "<br/>" and then create numbers accordingly
-            var numbers  = "1\n2";
-            
-            text.className += " code";
-            text.innerHTML = "<div class='numbers'>"+ numbers +"</div><div class='text'>"words.substr(start_index + l, stop_index - start_index - l)"</div>";
-        }
+    if (stop_index > start_index && start_index > -1) {
+            console.log( words.substring(start_index + l, stop_index) );
+        
+        var newtext = words.substr(start_index + l, stop_index - start_index - l);
+        var numbers  = n_build();
+        function n_build(){
+            n = ""
+            for(i=1; i<newtext.split('\n').length+1; i++){
+                console.log( i );
+                n += "<br/>" + i;
+                console.log( n );
+            }
+            return n.substring(5, n.length);
+         }
+        
+        text.className += " code";
+        text.innerHTML = "<div class='numbers'>"+ numbers +"</div><div class='text'>" + newtext + "</div>";
     }
 
 }
