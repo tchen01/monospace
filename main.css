@@ -2,7 +2,7 @@
     font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
 
     background: rgb(230,230,250);
-    color: black;
+    /* color: black; */
     
     width: 100%;
     
@@ -24,7 +24,6 @@
 
 /* .code > div */
 .numbers{
-    color: rgb(150,150,150);
     width: 6%;
     display: inline-block;
     border-right: 1px solid lightgrey;
@@ -37,5 +36,11 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+pre{
+    margin: 0;
+    padding: 0;
+    display: inline-block;
 }
 
