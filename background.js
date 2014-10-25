@@ -4,6 +4,7 @@ function monospaceInit() {
     window.msgWindow = document.getElementById("webMessengerRecentMessages");
     detect();
     msgWindow.addEventListener('DOMNodeInserted', detect, false);
+    //^ update to just draw new elements.
 }
 
 var start = "`~ ";
@@ -14,27 +15,22 @@ var text = [];
     
 function detect() {
    var msgWindow = document.getElementById("webMessengerRecentMessages");
+   //^ something still sketchy about this.
 
     //characters for codeblock
     
 
-    //main chat only. small chat splits lines into seperate elements...
     var chat = msgWindow.getElementsByClassName("_38"); 
-    //^what is the exact meanning of _38???
-    
+
+    //FB large chat specific
     for (i = 0; i < chat.length; i++) {
         draw( chat[i].getElementsByTagName("p")[0] )
     }
-    //console.log( text, chat );
-    // for (i = 0; i < chat.length; i++) {
-        // draw( chat[i] ); //really should be text but i'm having issues making text array
-    // }
 }
 
-//takes array of elements containing possible code blocks and edits appropriate ones
+
 function draw( em ) {
-    text = em;
-    words = em.textContent;
+    words = em.innerText;
     var stop_index = words.indexOf(stop);
     var start_index = words.indexOf(start);
     console.log( words.indexOf( "\n" ), start_index, stop_index );
@@ -54,8 +50,8 @@ function draw( em ) {
             return n.substring(5, n.length);
          }
         
-        text.className += " code";
-        text.innerHTML = "<div class='numbers'>"+ numbers +"</div><div class='text'>" + newtext + "</div>";
+        em.className += " code";
+        em.innerHTML = "<div class='numbers'>"+ numbers +"</div><div class='text'>" + newtext + "</div>";
     }
 
 }
