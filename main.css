@@ -2,11 +2,45 @@
     font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
 
     background: rgb(230,230,250);
-    color: black;
-
+    /* color: black; */
+    
+    width: 100%;
+    
     padding: .3em;
     box-sizing: border-box;
 
     border: 1px solid lightgrey;
     border-radius: .3em;
+    
+    
 }
+
+/* .code > p */
+.text{
+    padding-left: .5em;
+    width: 87%;
+    display: inline-block;
+}
+
+/* .code > div */
+.numbers{
+    width: 6%;
+    display: inline-block;
+    border-right: 1px solid lightgrey;
+    padding-right: .5em;
+    text-align: right;
+    
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+pre{
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
