@@ -7,7 +7,7 @@ function monospaceInit(evt) {
 
 function detect(evt) {
 
-    console.log("hello");
+    console.log("bye");
     //characters for codeblock
     var start = "`~ ";
     var stop = " ~`";
