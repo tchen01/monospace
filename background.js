@@ -1,5 +1,11 @@
-window.addEventListener("load", detect, false);
-document.getElementById("webMessengerRecentMessages").addEventListener('DOMNodeInserted', detect, false); 
+window.addEventListener("load", monospaceInit, false);
+
+function monospaceInit(evt) {
+    detect(evt);
+    document.getElementById(
+        "webMessengerRecentMessages"
+    ).addEventListener('DOMNodeInserted', detect, false);
+}
 
 function detect(evt) {
 
@@ -13,7 +19,7 @@ function detect(evt) {
     for (i = 0; i < chat.length; i++) {
         text = chat[i].getElementsByTagName("p")[0];
         // console.log( text );
-        words = chat[i].innerText
+        words = chat[i].innerText;
         // console.log(words + "contains lol? : " + words.indexOf( "lol" ) );
         var stop_index = words.indexOf(stop);
         var start_index = words.indexOf(start);
