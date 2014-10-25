@@ -3,10 +3,35 @@
 
     background: rgb(230,230,250);
     color: black;
-
+    
+    width: 100%;
+    
     padding: .3em;
     box-sizing: border-box;
 
     border: 1px solid lightgrey;
     border-radius: .3em;
+    
+    
 }
+
+/* .code > p */
+.text{
+    width: 92%;
+    display: inline-block;
+}
+
+/* .code > div */
+.numbers{
+    color: lightgrey;
+    width: 8%;
+    display: inline-block;
+    
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
