@@ -1,10 +1,8 @@
 window.addEventListener("load", monospaceInit, false);
-
+var messangerwindow = document.getElementById("webMessengerRecentMessages");
 function monospaceInit(evt) {
     detect(evt);
-    document.getElementById(
-        "webMessengerRecentMessages"
-    ).addEventListener('DOMNodeInserted', detect, false);
+    messangerwindow.addEventListener('DOMNodeInserted', detect, false);
 }
 
 function detect(evt) {
@@ -15,7 +13,7 @@ function detect(evt) {
     var stop = " ~`";
 
     //main chat only. small chat splits lines into seperate elements...
-    var chat = document.getElementsByClassName("_38"); //what is the exact meanning of _38???
+    var chat = messangerwindow.getElementsByClassName("_38"); //what is the exact meanning of _38???
     for (i = 0; i < chat.length; i++) {
         text = chat[i].getElementsByTagName("p")[0];
         // console.log( text );
