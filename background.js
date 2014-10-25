@@ -45,12 +45,8 @@ function update(e) {
     }
 }
 
-function copy(e){
-    console.log("!!!");    
-}
 
 function draw( em ) {
-    em.addEventListener("click", copy, false);
     
     words = em.innerText;
     var stop_index = words.indexOf(stop);
