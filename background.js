@@ -1,8 +1,7 @@
-window.addEventListener("load", myMain, false);
-document.addEventListener('DOMNodeInserted', myMain, false); 
-//^this causes  latency with FB chat since there are so many changes
+window.addEventListener("load", detect, false);
+document.getElementById("webMessengerRecentMessages").addEventListener('DOMNodeInserted', detect, false); 
 
-function myMain(evt) {
+function detect(evt) {
 
     console.log("hello");
     //characters for codeblock
@@ -10,7 +9,7 @@ function myMain(evt) {
     var stop = " ~`";
 
     //main chat only. small chat splits lines into seperate elements...
-    var chat = document.getElementsByClassName("_38");
+    var chat = document.getElementsByClassName("_38"); //what is the exact meanning of _38???
     for (i = 0; i < chat.length; i++) {
         text = chat[i].getElementsByTagName("p")[0];
         // console.log( text );
