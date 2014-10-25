@@ -5,12 +5,13 @@
     "description": "A plain text description",
 
     "web_accessible_resources": [
-        "app.js"
+        "app.js",
+        "highlight/highlight.pack.js"
     ],
 
     "content_scripts": [{
-        "matches": ["<all_urls>"],
+        "matches": ["http://*.facebook.com/*", "https://*.facebook.com/*"],
         "css": ["main.css", "highlight/styles/default.css"],
-        "js": ["background.js", "highlight/highlight.pack.js"]
+        "js": ["background.js"]
     }]
 }

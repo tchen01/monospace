@@ -5,17 +5,24 @@
 
 var observerConfig = {
     childList: true,
-    subtree: true
+    subtree: true,
+    characterData: false,
+    attributes: false
 };
 
 function monospaceListen() {
-    console.log("calling monospace...");
     var monospaceObserver = new MutationObserver(function(ms) {
         ms.forEach(function(m) {
-            console.log(m.type);
+            if (m.addedNodes.length > 0) {
+                if (m.addedNodes[0].className === "_3hi clearfix") {
+                    // div _3hi -> div _38 -> span null -> p
+                    draw(m.addedNodes[0].firstChild.firstChild.firstChild);
+                }
+            }
         });
     });
-    monospaceObserver.observe(document.body, observerConfig);
+    // TODO change event listener location depending on major website
+    monospaceObserver.observe(document.getElementById('webMessengerRecentMessages'), observerConfig);
 }
 
 var start = "`~";
@@ -24,35 +31,7 @@ var l = 2;
 
 var text = [];
 
-function detect() {
-    var msgWindow = document.getElementById("webMessengerRecentMessages");
-    //^ something still sketchy about this.
-
-    //characters for codeblock
-
-
-    var chat = msgWindow.getElementsByClassName("_38");
-
-    //FB large chat specific
-    for (i = chat.length - 1; i >= 0; i--) {
-        draw(chat[i].getElementsByTagName("p")[0]);
-    }
-}
-
-//run draw only on new element
-function update(e) {
-    console.log("update");
-    console.log(e);
-    if (true) {
-        detect();
-    }
-}
-
-function copy(e) {
-    console.log("!!!");
-}
-
-function n_build(newtext) {
+function nBuild(newtext) {
     n = "";
     for (i = 1; i < newtext.split('\n').length + 1; i++) {
         n += "<br/>" + i;
@@ -61,8 +40,6 @@ function n_build(newtext) {
 }
 
 function draw(em) {
-    em.addEventListener("click", copy, false);
-
     words = em.innerText;
     var stop_index = words.indexOf(stop);
     var start_index = words.indexOf(start);
@@ -73,7 +50,7 @@ function draw(em) {
         var newtext = words.substr(start_index + l, stop_index - start_index - l);
         newtext = newtext.replace(/^[\r\n]+|[\r\n]+$/g, '');
 
-        var numbers = n_build(newtext);
+        var numbers = nBuild(newtext);
 
         em.className += " code";
         em.innerHTML = "<div class='numbers'>" + numbers + "</div><pre class='text'>" + newtext + "</pre>";
@@ -82,4 +59,11 @@ function draw(em) {
 
 }
 
-monospaceListen();
+var checkForMsg = setInterval(function() {
+    var msgWindow = document.getElementById('webMessengerRecentMessages');
+    if (msgWindow !== null) {
+        console.log('found!');
+        monospaceListen(msgWindow, observerConfig);
+        clearInterval(checkForMsg);
+    }
+}, 50);
