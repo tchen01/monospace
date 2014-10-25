@@ -5,4 +5,4 @@
 
 var script = document.createElement("script");
 script.src = chrome.extension.getURL("app.js");
-document.head.appendChild(s);
+document.head.appendChild(script);
