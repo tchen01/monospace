@@ -1,0 +1,13 @@
+.code{
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+  
+  background: rgb(230,230,250);
+  color: black;
+  
+  padding: .3em;
+  box-sizing: border-box;
+  
+  border: 1px solid lightgrey;
+  border-radius: .3em;
+
+}
