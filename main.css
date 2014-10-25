@@ -1,12 +1,12 @@
 .code {
     font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
 
-    background: rgb(230,230,250);
+    background: rgb(240,240,240);
     /* color: black; */
     
     width: 100%;
     
-    padding: .3em;
+    padding: .1em;
     box-sizing: border-box;
 
     border: 1px solid lightgrey;
@@ -25,6 +25,7 @@
 /* .code > div */
 .numbers{
     width: 6%;
+    color: rgb(150,150,150  );
     display: inline-block;
     border-right: 1px solid lightgrey;
     padding-right: .5em;
@@ -38,9 +39,4 @@
     user-select: none;
 }
 
-pre{
-    margin: 0;
-    padding: 0;
-    display: inline-block;
-}
 
