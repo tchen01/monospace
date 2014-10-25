@@ -4,6 +4,10 @@
     "version": "0",
     "description": "A plain text description",
 
+    "web_accessible_resources": [
+        "app.js"
+    ],
+
     "content_scripts": [{
         "matches": ["<all_urls>"],
         "css": ["main.css", "highlight/styles/default.css"],
