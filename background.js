@@ -56,35 +56,50 @@ function detect() {
     for (i = chat.length-1; i >= 0; i--) {
         em = chat[i].getElementsByTagName("p")[0];
         if( em.getElementsByClassName('code') > 0) break;
-        draw( em )
+     //   draw( em )
     }
     
    
     
 }
-//this works well but using the above DOMnode detection causes a loop
-//perhaps this could be seperated tot eh draw loop and the elemetn formatting loop
+//this draws all code snippets for small chat
+//this does not need to be run every time a new chat is made
+
+//draw on new ones. use mutation oberver to see new _5wdf class elements then run
+//the for loop with j=0
 function detect_mini(){
     //FB small chat specific
     var miniWindow = document.getElementById("ChatTabsPagelet");
+    var chats = miniWindow.getElementsByTagName("tbody"); 
+    
+    console.log("minichat: " + chats.length );
+    for( i = chats.length-1; i>=0; i--){
+        var mini_chat = chats[i].getElementsByClassName( "_5wdf" );
+        
+        for( j = 0; j < mini_chat.length; j++){
+            cont = mini_chat[j].firstElementChild.firstElementChild;// _5y15
+            
+            console.log( cont );
+            if( cont.getElementsByClassName('code').length > 0 ) break;
+            
+            text = cont.innerText;
+            console.log( text );
+            cont.innerHTML =  "<div><p class='mchat'>" + text + "</p></div>";
+            if( cont.getElementsByTagName("p")[0] != 'undefined'){
+                draw( cont.getElementsByTagName("p")[0] )
+            }
+        } 
+    }
+    
+
+}
+
+function combineMini(){
+    var miniWindow = document.getElementById("ChatTabsPagelet");
     var mini_chat = miniWindow.getElementsByTagName("tbody"); //_5ys_ _5wdf
     var mini_chat = mini_chat[0].getElementsByClassName("_5wdf");
-    
-    console.log("minichat: " + mini_chat.length );
-    
-    for( i = mini_chat.length-1; i>=0; i--){
-        cont = mini_chat[i].childNodes[0].childNodes[0].childNodes[0]
-        console.log( cont.className );
-        if( cont.getElementsByClassName('code').length > 0 ) break;
-        text = cont.innerText;
-        console.log( text );
-        cont.outerHTML =  "<div><p class='mchat'>" + text + "</p></div>";
-        
-    }
-    
-    for (i = mini_chat.length-1; i >= 0; i--) {
-        draw( mini_chat[i].getElementsByTagName("p")[0] )
-    }
+ 
+
 }
 
 //run draw only on new element
