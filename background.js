@@ -1,11 +1,3 @@
-var checkExist = setInterval(function() {
-   if (document.getElementById("webMessengerRecentMessages")) {
-      console.log("Exists!");
-      monospaceInit();
-      clearInterval(checkExist);
-   }
-}, 50);
-
 var check_miniExist = setInterval(function() {
    if (document.getElementById("ChatTabsPagelet")) {
       console.log("mini Exits!");
@@ -14,19 +6,6 @@ var check_miniExist = setInterval(function() {
    }
 }, 100);
 
-function monospaceInit() {
-    clearInterval(checkExist);
-
-    window.msgWindow = document.getElementById("webMessengerRecentMessages");
-    window.miniWindow = document.getElementById("ChatTabsPagelet");
-
-    detect();
-    detect_mini();
-    msgWindow.addEventListener('DOMNodeInserted', update, false);
-    // miniWindow.addEventListener('DOMNodeInserted', update_mini, false);
-
-    //^ update to just draw new elements.
-}
 
 function monospace_miniInit() {
     clearInterval(check_miniExist);
@@ -41,31 +20,12 @@ var start = "`~";
 var stop = "~`";
 var l = 2;
 
-var text = [];
+var text = "";
 
-function detect() {
-   var msgWindow = document.getElementById("webMessengerRecentMessages");
-   //^ something still sketchy about this.
-
-    //characters for codeblock
-    
-
-    var chat = msgWindow.getElementsByClassName("_38"); 
-    // console.log( chat )
-    //FB large chat specific
-    for (i = chat.length-1; i >= 0; i--) {
-        em = chat[i].getElementsByTagName("p")[0];
-        if( em.getElementsByClassName('code') > 0) break;
-     //   draw( em )
-    }
-    
-   
-    
-}
 //this draws all code snippets for small chat
 //this does not need to be run every time a new chat is made
 
-//draw on new ones. use mutation oberver to see new _5wdf class elements then run
+//use mutation observer to see new _5wdf class elements then run
 //the for loop with j=0
 function detect_mini(){
     //FB small chat specific
@@ -77,7 +37,7 @@ function detect_mini(){
         var mini_chat = chats[i].getElementsByClassName( "_5wdf" );
         
         for( j = 0; j < mini_chat.length; j++){
-            cont = mini_chat[j].firstElementChild.firstElementChild;// _5y15
+            cont = mini_chat[j].firstElementChild.firstElementChild;// _5y15 (i think)
             
             console.log( cont );
             if( cont.getElementsByClassName('code').length > 0 ) break;
@@ -94,22 +54,6 @@ function detect_mini(){
 
 }
 
-function combineMini(){
-    var miniWindow = document.getElementById("ChatTabsPagelet");
-    var mini_chat = miniWindow.getElementsByTagName("tbody"); //_5ys_ _5wdf
-    var mini_chat = mini_chat[0].getElementsByClassName("_5wdf");
- 
-
-}
-
-//run draw only on new element
-function update(e) {
-    // console.log("update");
-    // console.log(e);
-    if(true){
-        detect();
-    }
-}
 
 function update_mini(e){
     detect_mini();
