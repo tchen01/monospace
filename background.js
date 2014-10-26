@@ -6,7 +6,13 @@ var checkExist = setInterval(function() {
    }
 }, 50);
 
-
+var check_miniExist = setInterval(function() {
+   if (document.getElementById("ChatTabsPagelet")) {
+      console.log("mini Exits!");
+      // monospace_miniInit();
+      clearInterval(check_miniExist);
+   }
+}, 100);
 
 function monospaceInit() {
     clearInterval(checkExist);
@@ -16,11 +22,20 @@ function monospaceInit() {
 
     detect();
     detect_mini();
-    // msgWindow.addEventListener('DOMNodeInserted', update, false);
+    msgWindow.addEventListener('DOMNodeInserted', update, false);
     // miniWindow.addEventListener('DOMNodeInserted', update_mini, false);
 
     //^ update to just draw new elements.
 }
+
+function monospace_miniInit() {
+    clearInterval(check_miniExist);
+    window.miniWindow = document.getElementById("ChatTabsPagelet");
+
+    detect_mini();
+    miniWindow.addEventListener('DOMNodeInserted', update, false);
+}
+
 
 var start = "`~";
 var stop = "~`";
@@ -39,7 +54,9 @@ function detect() {
     // console.log( chat )
     //FB large chat specific
     for (i = chat.length-1; i >= 0; i--) {
-        draw( chat[i].getElementsByTagName("p")[0] )
+        em = chat[i].getElementsByTagName("p")[0];
+        if( em.getElementsByClassName('code') > 0) break;
+        draw( em )
     }
     
    
@@ -57,6 +74,8 @@ function detect_mini(){
     
     for( i = mini_chat.length-1; i>=0; i--){
         cont = mini_chat[i].childNodes[0].childNodes[0].childNodes[0]
+        console.log( cont.className );
+        if( cont.getElementsByClassName('code').length > 0 ) break;
         text = cont.innerText;
         console.log( text );
         cont.outerHTML =  "<div><p class='mchat'>" + text + "</p></div>";
@@ -82,7 +101,7 @@ function update_mini(e){
 }
 
 function draw( em ) {
-    
+    console.log( "em: "+ em)
     words = em.innerText;
     var stop_index = words.indexOf(stop);
     var start_index = words.indexOf(start);
