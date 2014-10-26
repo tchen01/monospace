@@ -16,8 +16,8 @@ function monospaceInit() {
 
     detect();
     detect_mini();
-    msgWindow.addEventListener('DOMNodeInserted', update, false);
-    miniWindow.addEventListener('DOMNodeInserted', update_mini, false);
+    // msgWindow.addEventListener('DOMNodeInserted', update, false);
+    // miniWindow.addEventListener('DOMNodeInserted', update_mini, false);
 
     //^ update to just draw new elements.
 }
@@ -52,30 +52,18 @@ function detect_mini(){
     var mini_chat = miniWindow.getElementsByTagName("tbody"); //_5ys_ _5wdf
     var mini_chat = mini_chat[0].getElementsByClassName("_5wdf");
     
-    console.log("minichat: " + mini_chat[0] );
+    console.log("minichat: " + mini_chat.length );
     
     for( i = mini_chat.length-1; i>=0; i--){
-        texts = mini_chat[i].childNodes[0].childNodes[0].childNodes
-        chat = texts[0].childNodes
-        console.log("chat"+chat.length + chat);
-
-        if(chat.length < 2){
-            text = chat[0].innerText + "!!!";
-        }else {
-            var text = ""
-            for(i=0; i < chat.length; i++){
-                text += "<br/>" + chat[i].innerText;
-                console.log( text );
-                chat[i].outerHTML = "";
-            }
-            text = text.substring(5, text.length).replace("<br/><br/>", "<br/>");
-            text = "<span>"+ text +"</span>";
-            console.log( text );
-        }
+        cont = mini_chat[i].childNodes[0].childNodes[0].childNodes[0]
+        text = cont.innerText;
+        console.log( text );
+        cont.outerHTML =  "<div><p class='mchat'>" + text + "</p></div>";
         
-        texts[0].outerHTML = "<div class='chat'>"+ text +"</div>"
-        console.log(texts[0]);
-        draw( texts[0] );
+    }
+    
+    for (i = mini_chat.length-1; i >= 0; i--) {
+        draw( mini_chat[i].getElementsByTagName("p")[0] )
     }
 }
 

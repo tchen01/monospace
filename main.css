@@ -1,6 +1,6 @@
-.chat.code{
+.mchat.code{
     width: 170px;
-
+    padding: 0;
 }
 .code {
     font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
@@ -10,11 +10,11 @@
     
     width: 100%;
     
-    padding: .3em;
+    padding: 3%;
     box-sizing: border-box;
 
     border: 1px solid lightgrey;
-    border-radius: .3em;
+    border-radius: 3%;
     
     
 }
@@ -42,9 +42,8 @@
     user-select: none;
 }
 
-pre{
+div>p{
     margin: 0;
     padding: 0;
-    display: inline-block;
 }
 
