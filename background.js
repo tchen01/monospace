@@ -11,7 +11,7 @@ var checkExist = setInterval(function() {
 function monospaceInit() {
     window.msgWindow = document.getElementById("webMessengerRecentMessages");
     detect();
-   // msgWindow.addEventListener('DOMNodeInserted', update, false);
+    // msgWindow.addEventListener('DOMNodeInserted', update, false);
     //^ update to just draw new elements.
 }
 
@@ -29,11 +29,11 @@ function detect() {
     
 
     var chat = msgWindow.getElementsByClassName("_38"); 
-    console.log( chat )
+    // console.log( chat )
     //FB large chat specific
-    // for (i = chat.length-1; i >= 0; i--) {
-        // draw( chat[i].getElementsByTagName("p")[0] )
-    // }
+    for (i = chat.length-1; i >= 0; i--) {
+        draw( chat[i].getElementsByTagName("p")[0] )
+    }
     
     //FB small chat specific
     var miniWindow = document.getElementById("ChatTabsPagelet");
@@ -63,8 +63,8 @@ function detect() {
             texts[0].innerHTML = text;
         }
         texts[0].style.background = "red";
-
-       // draw( mini_chat[i].getElementsByClas
+        console.log(texts[0]);
+        draw( texts[0] );
     }
 }
 
