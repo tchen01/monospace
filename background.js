@@ -11,7 +11,7 @@ var checkExist = setInterval(function() {
 function monospaceInit() {
     window.msgWindow = document.getElementById("webMessengerRecentMessages");
     detect();
-    msgWindow.addEventListener('DOMNodeInserted', update, false);
+   // msgWindow.addEventListener('DOMNodeInserted', update, false);
     //^ update to just draw new elements.
 }
 
@@ -29,17 +29,49 @@ function detect() {
     
 
     var chat = msgWindow.getElementsByClassName("_38"); 
-
+    console.log( chat )
     //FB large chat specific
-    for (i = chat.length-1; i >= 0; i--) {
-        draw( chat[i].getElementsByTagName("p")[0] )
+    // for (i = chat.length-1; i >= 0; i--) {
+        // draw( chat[i].getElementsByTagName("p")[0] )
+    // }
+    
+    //FB small chat specific
+    var miniWindow = document.getElementById("ChatTabsPagelet");
+    console.log( miniWindow );
+    var mini_chat = miniWindow.getElementsByTagName("tbody"); //_5ys_ _5wdf
+    var mini_chat = mini_chat[0].getElementsByClassName("_5wdf");
+    
+    console.log("minichat: " + mini_chat[0] );
+    
+    for( i = mini_chat.length-1; i>=0; i--){
+        texts = mini_chat[i].childNodes[0].childNodes[0].childNodes
+        chat = texts[0].childNodes
+        console.log("chat"+chat.length + chat);
+
+        if(chat.length < 2){
+            texts[0].innerHTML = "<span class='chat'>"+ chat[0].innerText +"</span>"
+        }else {
+            var text = ""
+            for(i=0; i < chat.length; i++){
+                text += "<br/>" + chat[i].innerText;
+                console.log( text );
+                chat[i].outerHTML = "";
+            }
+            text = text.substring(5, text.length).replace("<br/><br/>", "<br/>");
+            text = "<span class='chat'>"+ text +"</span>";
+            console.log( text );
+            texts[0].innerHTML = text;
+        }
+        texts[0].style.background = "red";
+
+       // draw( mini_chat[i].getElementsByClas
     }
 }
 
 //run draw only on new element
 function update(e) {
-    console.log("update");
-    console.log(e);
+    // console.log("update");
+    // console.log(e);
     if(true){
         detect();
     }
