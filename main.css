@@ -1,3 +1,7 @@
+.chat.code{
+    width: 170px;
+
+}
 .code {
     font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
 
@@ -17,7 +21,7 @@
 
 /* .code > p */
 .text{
-    padding-left: .5em;
+    padding-left: .5%;
     width: 87%;
     display: inline-block;
 }
@@ -27,7 +31,7 @@
     width: 6%;
     display: inline-block;
     border-right: 1px solid lightgrey;
-    padding-right: .5em;
+    padding-right: .5%;
     text-align: right;
     
     -webkit-touch-callout: none;

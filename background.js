@@ -9,9 +9,16 @@ var checkExist = setInterval(function() {
 
 
 function monospaceInit() {
+    clearInterval(checkExist);
+
     window.msgWindow = document.getElementById("webMessengerRecentMessages");
+    window.miniWindow = document.getElementById("ChatTabsPagelet");
+
     detect();
-    // msgWindow.addEventListener('DOMNodeInserted', update, false);
+    detect_mini();
+    msgWindow.addEventListener('DOMNodeInserted', update, false);
+    miniWindow.addEventListener('DOMNodeInserted', update_mini, false);
+
     //^ update to just draw new elements.
 }
 
@@ -35,9 +42,13 @@ function detect() {
         draw( chat[i].getElementsByTagName("p")[0] )
     }
     
+   
+    
+}
+
+function detect_mini(){
     //FB small chat specific
     var miniWindow = document.getElementById("ChatTabsPagelet");
-    console.log( miniWindow );
     var mini_chat = miniWindow.getElementsByTagName("tbody"); //_5ys_ _5wdf
     var mini_chat = mini_chat[0].getElementsByClassName("_5wdf");
     
@@ -49,7 +60,7 @@ function detect() {
         console.log("chat"+chat.length + chat);
 
         if(chat.length < 2){
-            texts[0].innerHTML = "<span class='chat'>"+ chat[0].innerText +"</span>"
+            text = chat[0].innerText + "!!!";
         }else {
             var text = ""
             for(i=0; i < chat.length; i++){
@@ -58,11 +69,11 @@ function detect() {
                 chat[i].outerHTML = "";
             }
             text = text.substring(5, text.length).replace("<br/><br/>", "<br/>");
-            text = "<span class='chat'>"+ text +"</span>";
+            text = "<span>"+ text +"</span>";
             console.log( text );
-            texts[0].innerHTML = text;
         }
-        texts[0].style.background = "red";
+        
+        texts[0].outerHTML = "<div class='chat'>"+ text +"</div>"
         console.log(texts[0]);
         draw( texts[0] );
     }
@@ -77,6 +88,9 @@ function update(e) {
     }
 }
 
+function update_mini(e){
+    detect_mini();
+}
 
 function draw( em ) {
     
