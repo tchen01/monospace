@@ -2,6 +2,15 @@
     width: 170px;
     padding: 0;
 }
+
+/* this would be cool but I think it will require JS */
+/* .mchat.code:hover{
+    width: 500px;
+    position: relative;
+    left: -100px;
+    z-index: 99;
+} */
+
 .code {
     font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
 

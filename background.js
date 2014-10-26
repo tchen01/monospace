@@ -45,7 +45,8 @@ function detect() {
    
     
 }
-
+//this works well but using the above DOMnode detection causes a loop
+//perhaps this could be seperated tot eh draw loop and the elemetn formatting loop
 function detect_mini(){
     //FB small chat specific
     var miniWindow = document.getElementById("ChatTabsPagelet");
