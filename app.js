@@ -5,6 +5,7 @@
 
 var checkExist = setInterval(function() {
    if (document.getElementById("webMessengerRecentMessages") !== null) {
+      console.log( "Exists!" );
       monospaceInit();
       clearInterval(checkExist);
    }
@@ -40,8 +41,8 @@ function update() {
 //this should return nothing if only one line
 function nBuild(newtext) {
     n = "";
-    for (i = 1; i < newtext.split('\n').length + 1; i++) {
-        n += "<br/>" + i;
+    for (m = 1; m < newtext.split('\n').length + 1; m++) {
+        n += "<br/>" + m;
     }
     return n.substring(5, n.length);
 }
@@ -49,37 +50,53 @@ function nBuild(newtext) {
 
 function draw(em) {
     text = em.innerText;
+    console.log( text );
     var stop_index = text.lastIndexOf(del);
     var start_index = text.indexOf(del);
     // console.log( words.indexOf( "\n" ), start_index, stop_index );
-
+    //"/(" + del + ")(?:(?=(\\?))\2[^])*?\1/g";
     if (stop_index > start_index && start_index > -1) {
-        var regexExpression = "/(" + del + ")(?:(?=(\\?))\2[^])*?\1/g";
-        var regex = new RegExp(regexExpression, "i");
-        var texts = text.split( regex );
-        var codes = text.match( regex );
+        // var regexExpression = "(" + del + ")(?:(?=(\\?))\2[^])*?\1";
+        // var regex = new RegExp(regexExpression, "g");
+        // var texts = text.split( /(```)(?:(?=(\\?))\2[^])*?\1/g );
+        // var codes = text.match( regex );
         
-        var words = []; //array of words and codes in same order as text
+        // var words = []; //array of words and codes in same order as text
+        // //make sure code is up first
+        // if( start_index > 0){
+            // newtext += texts[0];
+            // texts.split();
+        // }
+        
+        // //starts with codes[0] and builds innerHTML for em
+        // for(i = 0; i < codes.length; i++){
+            // newtext += "<div class='numbers'>" + nBuild(codes[i]) +"</div><pre class='text'>" + codes[i] + "</pre>";
+            // if(texts[i] != undefined){
+                // newtext += texts[i];
+            // }
+        // }
+        
         var newtext = "";
-        
-        //make sure code is up first
-        if( start_index > 0){
-            newtext += texts[0];
-            texts.split();
-        }
-        
-        //starts with codes[0] and builds innerHTML for em
-        for(i = 0; i < codes.length; i++){
-            newtext += "<div class='numbers'>" + nBuild(codes[i]) +"</div><pre class='text'>" + codes[i] + "</pre>";
-            if(texts[i] != undefined){
-                newtext += texts[i];
+        var state = 0;
+        var words = text.split(/(```)/);
+        for(i = 0; i < words.length; i++){
+            console.log( i, words[i]);
+            if(words[i] == del){
+                if( state == 0){
+                    newtext += "<div class='numbers'>" + nBuild(words[i + 1]) +"</div><pre class='text'>"; 
+                    state = 1;
+                } else {
+                    newtext += "</pre>"
+                    state = 0;
+                }
+            } else if(words[i] == "") {
+            } else {
+                newtext += words[i]; // text innerHTML part
             }
+            
         }
-
-        //var newtext = text.substr(start_index + l, stop_index - start_index - l);
-        //newtext = newtext.replace(/^[\r\n]+|[\r\n]+$/g, '');
-
-        em.className += " code";
+        
+        em.className += " code"; //this causes unelemented text to still be part of '.code' parent
         em.innerHTML = newtext;
         hljs.highlightBlock(em.getElementsByClassName('text')[0]);
     }
