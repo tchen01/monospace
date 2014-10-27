@@ -19,7 +19,10 @@ function monospaceInit() {
 
 var start = "`~";
 var stop = "~`";
+
+var del = "```";
 var l = 2;
+
 
 var text = [];
 
@@ -34,6 +37,7 @@ function update() {
     }
 }
 
+//this should return nothing if only one line
 function nBuild(newtext) {
     n = "";
     for (i = 1; i < newtext.split('\n').length + 1; i++) {
@@ -42,21 +46,56 @@ function nBuild(newtext) {
     return n.substring(5, n.length);
 }
 
+
 function draw(em) {
-    words = em.innerText;
-    var stop_index = words.indexOf(stop);
-    var start_index = words.indexOf(start);
+    text = em.innerText;
+    var stop_index = text.lastIndexOf(del);
+    var start_index = text.indexOf(del);
     // console.log( words.indexOf( "\n" ), start_index, stop_index );
 
     if (stop_index > start_index && start_index > -1) {
+        var regexExpression = "/(" + del + ")(?:(?=(\\?))\2[^])*?\1/g";
+        var regex = new RegExp(regexExpression, "i");
+        var texts = text.split( regex );
+        var codes = text.match( regex );
+        
+        var words = []; //array of words and codes in same order as text
+        var newtext = "";
+        
+        //make sure code is up first
+        if( start_index > 0){
+            newtext += texts[0];
+            texts.split();
+        }
+        
+        //starts with codes[0] and builds innerHTML for em
+        for(i = 0; i < codes.length; i++){
+            newtext += "<div class='numbers'>" + nBuild(codes[i]) +"</div><pre class='text'>" + codes[i] + "</pre>";
+            if(texts[i] != undefined){
+                newtext += texts[i];
+            }
+        }
 
-        var newtext = words.substr(start_index + l, stop_index - start_index - l);
-        newtext = newtext.replace(/^[\r\n]+|[\r\n]+$/g, '');
-
-        var numbers = nBuild(newtext);
+        //var newtext = text.substr(start_index + l, stop_index - start_index - l);
+        //newtext = newtext.replace(/^[\r\n]+|[\r\n]+$/g, '');
 
         em.className += " code";
-        em.innerHTML = "<div class='numbers'>" + numbers + "</div><pre class='text'>" + newtext + "</pre>";
+        em.innerHTML = newtext;
         hljs.highlightBlock(em.getElementsByClassName('text')[0]);
     }
+}
+
+var a = function assemble (w, s, t){
+    var l = w.length;
+    
+    if( l <= 1 ) console.log( t + w[0]);
+    
+    if( s > 0 ){
+        t += w[0];
+        w.shift();
+    }
+    t += "<span>" + w[0] + "</span>";
+    console.log(t);
+    w.shift()
+    assemble(w, 1, t);
 }
