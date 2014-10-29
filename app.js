@@ -22,6 +22,7 @@ var start = "`~";
 var stop = "~`";
 
 var del = "```";
+var rev = "```"; //dynamically reverse del
 var l = 2;
 
 
@@ -51,53 +52,51 @@ function nBuild(newtext) {
 function draw(em) {
     text = em.innerText;
     console.log( text );
-    var stop_index = text.lastIndexOf(del);
+    var stop_index = text.lastIndexOf(rev);
     var start_index = text.indexOf(del);
-    // console.log( words.indexOf( "\n" ), start_index, stop_index );
-    //"/(" + del + ")(?:(?=(\\?))\2[^])*?\1/g";
+
     if (stop_index > start_index && start_index > -1) {
-        // var regexExpression = "(" + del + ")(?:(?=(\\?))\2[^])*?\1";
-        // var regex = new RegExp(regexExpression, "g");
-        // var texts = text.split( /(```)(?:(?=(\\?))\2[^])*?\1/g );
-        // var codes = text.match( regex );
-        
-        // var words = []; //array of words and codes in same order as text
-        // //make sure code is up first
-        // if( start_index > 0){
-            // newtext += texts[0];
-            // texts.split();
-        // }
-        
-        // //starts with codes[0] and builds innerHTML for em
-        // for(i = 0; i < codes.length; i++){
-            // newtext += "<div class='numbers'>" + nBuild(codes[i]) +"</div><pre class='text'>" + codes[i] + "</pre>";
-            // if(texts[i] != undefined){
-                // newtext += texts[i];
-            // }
-        // }
+        var regexExpression = "("+del+"|"+rev+")";
+        var regex = new RegExp(regexExpression, "g");
+        var texts = text.split( regex );
+        var codes = text.match( regex );
         
         var newtext = "";
-        var state = 0;
-        var words = text.split(/(```)/);
-        for(i = 0; i < words.length; i++){
-            console.log( i, words[i]);
-            if(words[i] == del){
+        var text_hold = "";
+        var code_hold = "";
+        var state = 0; //1: after code start delimiter but before stop
+        var words = text.split( regex );
+        console.log( words );
+        function write(){
+            for(i = 0; i < words.length; i++){
                 if( state == 0){
-                    newtext += "<div class='numbers'>" + nBuild(words[i + 1]) +"</div><pre class='text'>"; 
-                    state = 1;
-                } else {
-                    newtext += "</pre>"
-                    state = 0;
+                    if( words[i] == del){
+                        newtext += "<p>" + text_hold + "</p>";
+                        state = 1;
+                        text_hold = "";
+                    } else {
+                        text_hold += words[i];
+                    }
+                } else { //state == 1
+                    if( words[i] == rev ){
+                        newtext += "<div class='code'><div class='numbers'>" + nBuild( code_hold ) +"</div>";
+                        newtext += "<pre class='text'>" + code_hold + "</pre></span>";
+                        console.log( code_hold );
+                        state = 0;
+                        code_hold = "";
+                    } else {
+                        code_hold += words[i];
+                    }
                 }
-            } else if(words[i] == "") {
-            } else {
-                newtext += words[i]; // text innerHTML part
             }
-            
+            newtext += "<p>" + text_hold + code_hold + "</p>";
         }
+        write();
+       /* IMPORTANT */
+        //how do <p> get into %div.code???
+        //running refresh too many times and not ignoring drawn sections?
         
-        em.className += " code"; //this causes unelemented text to still be part of '.code' parent
-        em.innerHTML = newtext;
+        em.outerHTML = newtext;
         hljs.highlightBlock(em.getElementsByClassName('text')[0]);
     }
 }
