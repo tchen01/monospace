@@ -67,31 +67,37 @@ function draw(em) {
         var state = 0; //1: after code start delimiter but before stop
         var words = text.split( regex );
         console.log( words );
+        
         function write(){
-            for(i = 0; i < words.length; i++){
-                if( state == 0){
-                    if( words[i] == del){
-                        newtext += "<p>" + text_hold + "</p>";
-                        state = 1;
-                        text_hold = "";
-                    } else {
-                        text_hold += words[i];
-                    }
-                } else { //state == 1
-                    if( words[i] == rev ){
-                        newtext += "<div class='code'><div class='numbers'>" + nBuild( code_hold ) +"</div>";
-                        newtext += "<pre class='text'>" + code_hold + "</pre></div>";
-                        console.log( code_hold );
-                        state = 0;
-                        code_hold = "";
+          for(i = 0; i < words.length; i++){
+              if( state == 0){
+                if( words[i] == del){
+                    newtext += "<p>" + text_hold + "</p>";
+                    state = 1;
+                    text_hold = "";
+                } else {
+                    text_hold += words[i];
+                }
+            } else { //state == 1
+                if( words[i] == rev ){
+                    newtext += "<div class='code'><div class='numbers'>" + nBuild( code_hold ) +"</div>";
+                    newtext += "<pre class='text'>" + code_hold + "</pre></div>";
+                    console.log( code_hold );
+                    state = 0;
+                    code_hold = "";
                     } else {
                         code_hold += words[i];
                     }
                 }
             }
             newtext += "<p>" + text_hold + code_hold + "</p>";
+            console.log( newtext );
+            newtext = newtext.replace( "<div class='code'><div class='numbers'>1</div>", "<div class='code inline'>");
+            document.getElementById("a").innerHTML = newtext;
+            console.log ( document.getElementById("a").innerHTML );
         }
         write();
+
        /* IMPORTANT */
         //how do <p> get into %div.code???
         //running refresh too many times and not ignoring drawn sections?

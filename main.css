@@ -18,7 +18,6 @@
 /* .code > p */
 .text{
     padding-left: .5em;
-    width: 87%;
     display: inline-block;
 }
 
@@ -37,10 +36,22 @@
     -ms-user-select: none;
     user-select: none;
 }
+.inline{
+    display: inline;   
+    width: auto;
+    margin: 0 .2em 0 .2em;
+}
+
+.inline .text{
+    padding: 0 .2em 0 .2em;
+}
+
+p{
+    display: inline;   
+}
 
 pre{
     margin: 0;
     padding: 0;
     display: inline-block;
 }
-
