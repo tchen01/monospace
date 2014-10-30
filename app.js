@@ -80,7 +80,7 @@ function draw(em) {
                 } else { //state == 1
                     if( words[i] == rev ){
                         newtext += "<div class='code'><div class='numbers'>" + nBuild( code_hold ) +"</div>";
-                        newtext += "<pre class='text'>" + code_hold + "</pre></span>";
+                        newtext += "<pre class='text'>" + code_hold + "</pre></div>";
                         console.log( code_hold );
                         state = 0;
                         code_hold = "";
