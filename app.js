@@ -80,7 +80,12 @@ function draw(em) {
                 }
             } else { //state == 1
                 if( words[i] == rev ){
-                    newtext += "<div class='code'><div class='numbers'>" + nBuild( code_hold ) +"</div>";
+                    num = nBuild( code_hold );
+                    if( num == 1){
+                      newtext += "<div class='code inline'>";
+                    } else {
+                      newtext += "<div class='code'><div class='numbers'>" + nBuild( code_hold ) +"</div>";
+                    }
                     newtext += "<pre class='text'>" + code_hold + "</pre></div>";
                     console.log( code_hold );
                     state = 0;
@@ -90,11 +95,8 @@ function draw(em) {
                     }
                 }
             }
-            newtext += "<p>" + text_hold + code_hold + "</p>";
+            newtext += "<p>" + text_hold + code_hold + "</p>"; //would prefern not to change <p> to inline. Either add class or change tag
             console.log( newtext );
-            newtext = newtext.replace( "<div class='code'><div class='numbers'>1</div>", "<div class='code inline'>");
-            document.getElementById("a").innerHTML = newtext;
-            console.log ( document.getElementById("a").innerHTML );
         }
         write();
 
@@ -103,7 +105,7 @@ function draw(em) {
         //running refresh too many times and not ignoring drawn sections?
         
         em.outerHTML = newtext;
-        hljs.highlightBlock(em.getElementsByClassName('text')[0]);
+        hljs.highlightBlock(em.getElementsByClassName('text')[0]); //this is now broken?
     }
 }
 

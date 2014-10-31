@@ -40,12 +40,14 @@
     display: inline;   
     width: auto;
     margin: 0 .2em 0 .2em;
+    padding: 0;
 }
 
 .inline .text{
     padding: 0 .2em 0 .2em;
 }
 
+/* change this to a class */
 p{
     display: inline;   
 }
