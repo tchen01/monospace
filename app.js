@@ -84,9 +84,9 @@ function draw(em) {
                     if( num == 1){
                       newtext += "<div class='code inline'>";
                     } else {
-                      newtext += "<div class='code'><div class='numbers'>" + nBuild( code_hold ) +"</div>";
+                      newtext += "<div class='code'><div class='block_container'><div class='numbers'>" + nBuild( code_hold ) +"</div>";
                     }
-                    newtext += "<pre class='text'>" + code_hold + "</pre></div>";
+                    newtext += "<pre class='text'>" + code_hold + "</pre></div></div>";
                     console.log( code_hold );
                     state = 0;
                     code_hold = "";
