@@ -1,6 +1,6 @@
 .block_container{
     display: inline; 
-    white-space: no-wrap;
+    white-space: nowrap;
     /* why the hell isn't this showing up in chrome. The style doesn't even get applied. If i apply it using console it works as intended */
 }
 
@@ -46,7 +46,7 @@
 .inline{
     display: inline-block;   
     width: inherit; /* single line overflow won't be handled since it will just go off the page. */
-    margin: 0;
+    margin: 0 0 -.4em 0; /* this puts it at the same height as other text but some of the bottoms are cut off. */
     padding: 0;
 }
 
