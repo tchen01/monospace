@@ -15,15 +15,11 @@ function monospaceInit() {
     window.msgWindow = document.getElementById("webMessengerRecentMessages");
     update();
     // TODO: Update to just draw new elements.
-    msgWindow.addEventListener('DOMNodeInserted', update, false);
+    //msgWindow.addEventListener('DOMNodeInserted', update, false);
 }
-
-var start = "`~";
-var stop = "~`";
 
 var del = "```";
 var rev = "```"; //dynamically reverse del
-var l = 2;
 
 
 var text = [];
@@ -34,8 +30,11 @@ function update() {
     var chat = msgWindow.getElementsByClassName("_38");
 
     // FB large chat specific
-    for (i = chat.length-1; i >= 0; i--) {
-        draw(chat[i].getElementsByTagName("p")[0]);
+    for (k = chat.length-1; k >= 0; k--) { //what did it do wrong that makes the index variables interfere?
+        console.log( k );
+        draw(chat[k].getElementsByTagName("p")[0]);
+        // hljs.highlightBlock(chat[k].getElementsByClassName('text')[0]); //this is breaking inline //shouldn't use 'text[0]' since there could be more than one...
+
     }
 }
 
@@ -68,6 +67,7 @@ function draw(em) {
         var words = text.split( regex );
         console.log( words );
         
+        //http://jsfiddle.net/m9eLk17a/1/
         function write(){
           for(i = 0; i < words.length; i++){
               if( state == 0){
@@ -105,21 +105,6 @@ function draw(em) {
         //running refresh too many times and not ignoring drawn sections?
         
         em.outerHTML = newtext;
-        hljs.highlightBlock(em.getElementsByClassName('text')[0]); //this is now broken?
+        console.log( em );
     }
-}
-
-var a = function assemble (w, s, t){
-    var l = w.length;
-    
-    if( l <= 1 ) console.log( t + w[0]);
-    
-    if( s > 0 ){
-        t += w[0];
-        w.shift();
-    }
-    t += "<span>" + w[0] + "</span>";
-    console.log(t);
-    w.shift()
-    assemble(w, 1, t);
 }
