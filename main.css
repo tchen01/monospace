@@ -19,20 +19,22 @@
     
     width: 100%;
     
-    padding: 3%;
+    padding: .3em;
     box-sizing: border-box;
 
     border: 1px solid lightgrey;
-    border-radius: 3%;
+    border-radius: .3em;
     
+    position: relative; 
+    overflow-x: auto
     
 }
 
 /* .code > p */
 .text{
-    padding-left: .5%;
-    width: 87%;
+    padding-left: .5em;
     display: inline-block;
+    position: absolute;
 }
 
 /* .code > div */
@@ -40,7 +42,7 @@
     width: 6%;
     display: inline-block;
     border-right: 1px solid lightgrey;
-    padding-right: .5%;
+    padding-right: .5em;
     text-align: right;
     
     -webkit-touch-callout: none;
@@ -50,13 +52,24 @@
     -ms-user-select: none;
     user-select: none;
 }
-
-div>p{
+.inline{
+    display: inline;   
+    width: auto;
     margin: 0;
     padding: 0;
+}
+
+.inline .text{
+    padding: 0 .2em 0 .2em;
+}
+
+/* change this to a class or  */
+p{
+    display: inline;   
 }
 
 pre{
     margin: 0;
     padding: 0;
+    display: inline-block;
 }

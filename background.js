@@ -16,9 +16,9 @@ function monospace_miniInit() {
 }
 
 
-var start = "`~";
-var stop = "~`";
-var l = 2;
+var del = "```";
+var rev = "```"; //dynamically reverse del
+
 
 var text = "";
 
@@ -59,30 +59,71 @@ function update_mini(e){
     detect_mini();
 }
 
-function draw( em ) {
-    console.log( "em: "+ em)
-    words = em.innerText;
-    var stop_index = words.indexOf(stop);
-    var start_index = words.indexOf(start);
-    // console.log( words.indexOf( "\n" ), start_index, stop_index );
+function nBuild(newtext) {
+    n = "";
+    for (m = 1; m < newtext.split('\n').length + 1; m++) {
+        n += "<br/>" + m;
+    }
+    return n.substring(5, n.length);
+}
+
+function draw(em) {
+    text = em.innerText;
+    console.log( text );
+    var stop_index = text.lastIndexOf(rev);
+    var start_index = text.indexOf(del);
 
     if (stop_index > start_index && start_index > -1) {
+        var regexExpression = "("+del+"|"+rev+")";
+        var regex = new RegExp(regexExpression, "g");
+        var texts = text.split( regex );
+        var codes = text.match( regex );
         
-        var newtext = words.substr(start_index + l, stop_index - start_index - l);
-        var newtext = newtext.replace(/^[\r\n]+|[\r\n]+$/g,'');
+        var newtext = "";
+        var text_hold = "";
+        var code_hold = "";
+        var state = 0; //1: after code start delimiter but before stop
+        var words = text.split( regex );
+        console.log( words );
         
-        var numbers  = n_build();
-        function n_build(){
-            n = ""
-            for(i=1; i<newtext.split('\n').length+1; i++){
-                n += "<br/>" + i;
+        //http://jsfiddle.net/m9eLk17a/1/
+        function write(){
+          for(i = 0; i < words.length; i++){
+              if( state == 0){
+                if( words[i] == del){
+                    newtext += "<p>" + text_hold + "</p>";
+                    state = 1;
+                    text_hold = "";
+                } else {
+                    text_hold += words[i];
+                }
+            } else { //state == 1
+                if( words[i] == rev ){
+                    num = nBuild( code_hold );
+                    if( num == 1){
+                      newtext += "<div class='code inline'>";
+                    } else {
+                      newtext += "<div class='code'><div class='numbers'>" + nBuild( code_hold ) +"</div>";
+                    }
+                    newtext += "<pre class='text'>" + code_hold + "</pre></div>";
+                    console.log( code_hold );
+                    state = 0;
+                    code_hold = "";
+                    } else {
+                        code_hold += words[i];
+                    }
+                }
             }
-            return n.substring(5, n.length);
-         }
-        
-        em.className += " code";
-        em.innerHTML = "<div class='numbers'>"+ numbers +"</div><pre class='text'>" + newtext + "</pre>";
-        hljs.highlightBlock(em.getElementsByClassName( 'text' )[0]);
-    }
+            newtext += "<p>" + text_hold + code_hold + "</p>"; //would prefern not to change <p> to inline. Either add class or change tag
+            console.log( newtext );
+        }
+        write();
 
+       /* IMPORTANT */
+        //how do <p> get into %div.code???
+        //running refresh too many times and not ignoring drawn sections?
+        
+        em.outerHTML = newtext;
+        console.log( em );
+    }
 }
