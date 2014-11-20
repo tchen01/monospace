@@ -82,7 +82,7 @@ function draw(em) {
                 if( words[i] == rev ){
                     num = nBuild( code_hold );
                     if( num == 1){
-                      newtext += "<div class='code inline'>";
+                      newtext += "<div class='code inline'>"; //linebreaks at intersections having some issues.
                     } else {
                       newtext += "<div class='code'><div class='block_container'><div class='numbers'>" + nBuild( code_hold ) +"</div>";
                     }
