@@ -10,14 +10,37 @@ var observerConfig = {
     attributes: false
 };
 
+var cfx = []; //array containing all '_3hi clearfix' div 
+//there is probably a way to avoid having to recreate this every mutation.
+
 function monospaceListen() {
     var monospaceObserver = new MutationObserver(function(ms) {
         ms.forEach(function(m) {
             if (m.addedNodes.length > 0) {
-                if (m.addedNodes[0].className === "_3hi clearfix") {
-                    // div _3hi -> div _38 -> span null -> p
-                    draw(m.addedNodes[0].firstChild.firstChild.firstChild);
+                //console.log(m.addedNodes.className);
+                console.log(m.addedNodes);
+                for(l=0; l<m.addedNodes.length; l++){
+                    console.log(m.addedNodes[l].getElementsByClassName( "_3hi clearfix" ));
+                    var cfx = m.addedNodes[l].getElementsByClassName( "_3hi clearfix" );
+                    for(c=0; c<cfx.length; c++){
+                      draw(cfx[c].firstChild.firstChild.firstChild);
+                    }
+                    //cfx = cfx.concat( m.addedNodes[l].getElementsByClassName( "_3hi clearfix" )[0] ); //Y I AM DUM?? 
                 }
+                console.log( "cfx: " + cfx );
+                // cfx.forEach(function( p ) {
+                  // console.log( p );
+                  // // draw(p.getElementsByTagName( "p" )[0]);
+                // });
+                /*
+                if (m.addedNodes.className === "webMessengerMessageGroup clearfix") { 
+                //this returns an array with 18 items where 1-17 are li containing text. 
+                  console.log( "found: " + m.addedNodes );
+                  
+                    
+                    //draw(m.addedNodes[0].firstChild.firstChild.firstChild);
+                }
+                */
             }
         });
     });
