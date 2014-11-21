@@ -27,7 +27,6 @@ function monospaceListen() {
                       draw(cfx[c].firstChild.firstChild);
                       //%div._38 -> %span -> %p
                     }
-                    //cfx = cfx.concat( m.addedNodes[l].getElementsByClassName( "_3hi clearfix" )[0] ); //Y I AM DUM?? 
                 }
             }
         });
@@ -38,7 +37,7 @@ function monospaceListen() {
 //this should return nothing if only one line
 function nBuild(newtext) {
     n = "";
-    for (m = 1; m < newtext.split('\n').length + 1; m++) {
+    for (m = 1; m < newtext.split('<br/>').length + 1; m++) {
         n += "<br/>" + m;
     }
     return n.substring(5, n.length);
@@ -50,9 +49,17 @@ var rev = del.split('').reverse().join('');
 
 var text = [];
 
+//This function can be redone redone. It's not really that good.
+//for some reason something like 
+/*
+```code
 
+code```
+becomes ```codecode```
+i think the extra line break means it is split into separate elements or something.
+*/ 
 function draw(em) {
-    text = em.innerText;
+    text = em.innerText.replace(/\n/g, "<br/>");
     console.log( text );
     var stop_index = text.lastIndexOf(rev);
     var start_index = text.indexOf(del);
@@ -70,7 +77,8 @@ function draw(em) {
         var words = text.split( regex );
         console.log( words );
         
-        //http://jsfiddle.net/m9eLk17a/1/
+        //http://jsfiddle.net/m9eLk17a/1/  
+        //search for "/n" and change to "<br/>". perhaps before creating words
         function write(){
           for(i = 0; i < words.length; i++){
               if( state == 0){
