@@ -1,5 +1,5 @@
 /**
- * Observe DOM mutations and covnert monospace code blocks
+ * Observe DOM mutations and convert monospace code blocks
  * @author Tyler Chen, Jesse Mu
  */
 
@@ -16,7 +16,7 @@ var cfx = []; //ideally array containing all '_3hi clearfix' div
 function monospaceListen() {
     var monospaceObserver = new MutationObserver(function(ms) {
         ms.forEach(function(m) {
-            if (m.addedNodes.length > 0) {
+            if (m.addedNodes.length > 0) { //do we even need this part?
                 console.log(m.addedNodes);
                 for(l=0; l<m.addedNodes.length; l++){
                     console.log(m.addedNodes[l].getElementsByClassName( "_38" )); 
@@ -29,7 +29,6 @@ function monospaceListen() {
                     }
                     //cfx = cfx.concat( m.addedNodes[l].getElementsByClassName( "_3hi clearfix" )[0] ); //Y I AM DUM?? 
                 }
-                console.log( "cfx: " + cfx );
             }
         });
     });
@@ -46,7 +45,7 @@ function nBuild(newtext) {
 }
 
 var del = "```";
-var rev = "```"; //dynamically reverse del
+var rev = del.split('').reverse().join('');
 
 
 var text = [];
@@ -86,7 +85,7 @@ function draw(em) {
                 if( words[i] == rev ){
                     num = nBuild( code_hold );
                     if( num == 1){
-                      newtext += "<div class='code inline'>"; //linebreaks at intersections having some issues.
+                      newtext += "<div class='code inline'>"; //linebreaks next to delimiter not transferring.
                     } else {
                       newtext += "<div class='code'><div class='block_container'><div class='numbers'>" + nBuild( code_hold ) +"</div>";
                     }
@@ -99,17 +98,18 @@ function draw(em) {
                     }
                 }
             }
-            newtext += "<p>" + text_hold + code_hold + "</p>"; //would prefern not to change <p> to inline. Either add class or change tag
+            newtext += "<p>" + text_hold + code_hold + "</p>"; //would prefer not to change <p> to inline. Either add class or change tag
             console.log( newtext );
         }
         write();
-
-       /* IMPORTANT */
-        //how do <p> get into %div.code???
-        //running refresh too many times and not ignoring drawn sections?
+        //extra line breaks in block causes it to break...
+        //extra line breaks of regular text are deleted. This is probably reason for above issue
+        
+        //two inline blocks in a row have no padding/margin between them.
         
         em.outerHTML = newtext;
-        console.log( em );
+        console.log(em);
+        //highlight at some point...
     }
 }
 

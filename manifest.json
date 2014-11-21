@@ -12,6 +12,6 @@
     "content_scripts": [{
         "matches": ["http://*.facebook.com/*", "https://*.facebook.com/*"],
         "css": ["main.css", "highlight/styles/default.css"],
-        "js": ["background.js"]
+        "js": ["background.js"] 
     }]
 }
