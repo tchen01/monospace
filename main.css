@@ -60,6 +60,7 @@ p.inline{
 }
 
 pre{
+    width: inherit !important;
     margin: 0;
     padding: 0;
     display: inline-block;

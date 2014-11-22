@@ -55,10 +55,12 @@ function draw(em) {
     var start_index = html.indexOf(del);
 
     if (stop_index > start_index && start_index > -1) {
-       em.innerHTML = write(html);
-       hljs.highlightBlock( em );
-       //we really only want to highlight the %pre.code. 
-       //sometimes line numbers are colored if we do the entire block
+      em.innerHTML = write(html);
+      var code = em.getElementsByTagName( "pre" );
+      for(var i=0; i<code.length; i++){
+        console.log( code[i] );
+        hljs.highlightBlock( code[i] );
+      }
     }
 }
 
@@ -71,7 +73,8 @@ function draw(em) {
 //takes innterHTML of parent element of %p tag(s) and formats to code style blocks 
 //http://jsfiddle.net/m9eLk17a/1/  
 function write(t){
-  var text = t.replace(/\n/g, "<br/>").replace(/<\/p><p>/g, "<br/><br/>").replace(/<\/p>|<p>/g,""); 
+  var text = t.replace(del+"\n", del).replace("\n" + rev, rev).replace(/\n/g, "<br/>").replace(/<\/p><p>/g, "<br/><br/>").replace(/<\/p>|<p>/g,""); 
+  //breaks right after or before delimiter should be ignored.
   
   console.log( text );
   regexExpression = "("+del+"|"+rev+")";
