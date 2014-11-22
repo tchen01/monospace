@@ -10,6 +10,13 @@ var observerConfig = {
     attributes: false
 };
 
+//customizable variables
+var del = "```";
+var rev = del.split('').reverse().join('');
+
+
+//draws on code blocks when large chat is updated
+//should only be used on https://www.facebook.com/messages
 function monospaceListen() {
     var monospaceObserver = new MutationObserver(function(ms) {
         ms.forEach(function(m) {
@@ -31,7 +38,7 @@ function monospaceListen() {
     monospaceObserver.observe(document.getElementById('webMessengerRecentMessages'), observerConfig);
 }
 
-//this should return nothing if only one line
+//I believe that these functions should work in the small chat as is
 function nBuild(nt) {
     n = "";
     for (m = 0; m < nt.split('<br/>').length; m++) {
@@ -39,10 +46,6 @@ function nBuild(nt) {
     }
     return n.substring(5, n.length);
 }
-
-var del = "```";
-var rev = del.split('').reverse().join('');
-
 
 
 function draw(em) {
@@ -59,9 +62,6 @@ function draw(em) {
       }
     }
 }
-
-
-//I believe that should work in the small chat as is
 
 //write: string -> string
 //takes innterHTML of parent element of %p tag(s) and formats to code style blocks 
