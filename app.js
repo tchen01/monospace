@@ -19,12 +19,13 @@ function monospaceListen() {
             if (m.addedNodes.length > 0) { //do we even need this part?
                 console.log(m.addedNodes);
                 for(l=0; l<m.addedNodes.length; l++){
-                    console.log(m.addedNodes[l].getElementsByClassName( "_38" )); 
+                    // console.log(m.addedNodes[l].getElementsByClassName( "_38" )); 
                     
                     //there is probably a quicker way to get these elements.
                     var cfx = m.addedNodes[l].getElementsByClassName( "_38" );
+                    
                     for(c=0; c<cfx.length; c++){
-                      draw(cfx[c].firstChild.firstChild);
+                      draw(cfx[c].firstChild);
                       //%div._38 -> %span -> %p
                     }
                 }
@@ -59,12 +60,14 @@ becomes ```codecode```
 i think the extra line break means it is split into separate elements or something.
 */ 
 function draw(em) {
-    text = em.innerText.replace(/\n/g, "<br/>");
+    text = em.innerHTML;
     console.log( text );
     var stop_index = text.lastIndexOf(rev);
     var start_index = text.indexOf(del);
 
     if (stop_index > start_index && start_index > -1) {
+        var text = text.replace(/\n/g, "<br/>").replace("</p><p>", "<br/>").replace(/<\/p>|<p>/g,"");
+        console.log( text );
         var regexExpression = "("+del+"|"+rev+")";
         var regex = new RegExp(regexExpression, "g");
         var texts = text.split( regex );
