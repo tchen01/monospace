@@ -55,7 +55,9 @@
 }
 
 /* change this to a class or  */
-
+p.inline{
+    display: inline-block;   
+}
 
 pre{
     margin: 0;

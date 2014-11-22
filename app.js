@@ -48,82 +48,65 @@ var del = "```";
 var rev = del.split('').reverse().join('');
 
 
-var text = [];
 
-//This function can be redone redone. It's not really that good.
-//for some reason something like 
-/*
-```code
-
-code```
-becomes ```codecode```
-i think the extra line break means it is split into separate elements or something.
-*/ 
 function draw(em) {
     text = em.innerHTML;
-    console.log( text );
     var stop_index = text.lastIndexOf(rev);
     var start_index = text.indexOf(del);
 
     if (stop_index > start_index && start_index > -1) {
-        var text = text.replace(/\n/g, "<br/>").replace("</p><p>", "<br/>").replace(/<\/p>|<p>/g,"");
-        console.log( text );
-        var regexExpression = "("+del+"|"+rev+")";
-        var regex = new RegExp(regexExpression, "g");
-        var texts = text.split( regex );
-        var codes = text.match( regex );
-        
-        var newtext = "";
-        var text_hold = "";
-        var code_hold = "";
-        var state = 0; //1: after code start delimiter but before stop
-        var words = text.split( regex );
-        console.log( words );
-        
-        //http://jsfiddle.net/m9eLk17a/1/  
-        //search for "/n" and change to "<br/>". perhaps before creating words
-        function write(){
-          for(i = 0; i < words.length; i++){
-              if( state == 0){
-                if( words[i] == del){
-                    newtext += "<p>" + text_hold + "</p>";
-                    state = 1;
-                    text_hold = "";
-                } else {
-                    text_hold += words[i];
-                }
-            } else { //state == 1
-                if( words[i] == rev ){
-                    num = nBuild( code_hold );
-                    if( num == 1){
-                      newtext += "<div class='code inline'>"; //linebreaks next to delimiter not transferring.
-                    } else {
-                      newtext += "<div class='code'><div class='block_container'><div class='numbers'>" + nBuild( code_hold ) +"</div>";
-                    }
-                    newtext += "<pre class='text'>" + code_hold + "</pre></div></div>";
-                    console.log( code_hold );
-                    state = 0;
-                    code_hold = "";
-                    } else {
-                        code_hold += words[i];
-                    }
-                }
-            }
-            newtext += "<p>" + text_hold + code_hold + "</p>"; //would prefer not to change <p> to inline. Either add class or change tag
-            console.log( newtext );
-        }
         write();
-        //extra line breaks in block causes it to break...
-        //extra line breaks of regular text are deleted. This is probably reason for above issue
-        
-        //two inline blocks in a row have no padding/margin between them.
-        
-        em.outerHTML = newtext;
-        console.log(em);
+        em.outerHTML = "<span class='null'>" + newtext + "<\span>";
         //highlight at some point...
     }
 }
 
+//write: string -> string
+//takes innterHTML of parent element of %p tag(s) and formats to code style blocks 
+//http://jsfiddle.net/m9eLk17a/1/  
+function write(){
+  text = text.replace(/\n/g, "<br/>").replace(/<\/p><p>/g, "<br/><br/>").replace(/<\/p>|<p>/g,""); 
+  
+  console.log( text );
+  regexExpression = "("+del+"|"+rev+")";
+  regex = new RegExp(regexExpression, "g");
+  texts = text.split( regex );
+  codes = text.match( regex );
+  newtext = "";
+  text_hold = "";
+  code_hold = "";
+  state = 0; //1: after code start delimiter but before stop
+  words = text.split( regex );
+  console.log( words );
+  for(i = 0; i < words.length; i++){
+      if( state == 0){
+        if( words[i] == del){
+            newtext += "<p class='inline'>" + text_hold + "</p>";
+            state = 1;
+            text_hold = "";
+        } else {
+            text_hold += words[i];
+        }
+    } else { //state == 1
+        if( words[i] == rev ){
+            num = nBuild( code_hold );
+            if( num == 1){
+              newtext += "<div class='code inline'>"; //linebreaks next to delimiter not transferring.
+            } else {
+              newtext += "<div class='code'><div class='block_container'><div class='numbers'>" + nBuild( code_hold ) +"</div>";
+            }
+            newtext += "<pre class='text'>" + code_hold + "</pre></div></div>";
+            console.log( code_hold );
+            state = 0;
+            code_hold = "";
+            } else {
+                code_hold += words[i];
+            }
+        }
+    }
+    newtext += "<p class='inline'>" + text_hold + code_hold + "</p>"; //would prefer not to change <p> to inline. Either add class or change tag
+    console.log( newtext );
+}
 var checkForMsg = setInterval(function() {
     var msgWindow = document.getElementById('webMessengerRecentMessages');
     if (msgWindow !== null) {
