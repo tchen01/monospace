@@ -36,10 +36,10 @@ function monospaceListen() {
 }
 
 //this should return nothing if only one line
-function nBuild(newtext) {
+function nBuild(nt) {
     n = "";
-    for (m = 1; m < newtext.split('<br/>').length + 1; m++) {
-        n += "<br/>" + m;
+    for (m = 0; m < nt.split('<br/>').length; m++) {
+        n += "<br/>" + (m + 1);
     }
     return n.substring(5, n.length);
 }
@@ -55,11 +55,15 @@ function draw(em) {
     var start_index = text.indexOf(del);
 
     if (stop_index > start_index && start_index > -1) {
-        write();
-        em.outerHTML = "<span class='null'>" + newtext + "<\span>";
+        em.outerHTML = "<span class='null'>" + write() + "<\span>";
         //highlight at some point...
     }
 }
+
+
+//i am unsure how much of this is specific to large facebook chat. 
+//I think different chats will generally require slightly different write functions
+//it can probably be generalized fairly easily once we know what the rest require
 
 //write: string -> string
 //takes innterHTML of parent element of %p tag(s) and formats to code style blocks 
@@ -106,6 +110,7 @@ function write(){
     }
     newtext += "<p class='inline'>" + text_hold + code_hold + "</p>"; //would prefer not to change <p> to inline. Either add class or change tag
     console.log( newtext );
+    return newtext;
 }
 var checkForMsg = setInterval(function() {
     var msgWindow = document.getElementById('webMessengerRecentMessages');
