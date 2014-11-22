@@ -50,13 +50,15 @@ var rev = del.split('').reverse().join('');
 
 
 function draw(em) {
-    text = em.innerHTML;
-    var stop_index = text.lastIndexOf(rev);
-    var start_index = text.indexOf(del);
+    html = em.innerHTML;
+    var stop_index = html.lastIndexOf(rev);
+    var start_index = html.indexOf(del);
 
     if (stop_index > start_index && start_index > -1) {
-        em.outerHTML = "<span class='null'>" + write() + "<\span>";
-        //highlight at some point...
+       em.innerHTML = write(html);
+       hljs.highlightBlock( em );
+       //we really only want to highlight the %pre.code. 
+       //sometimes line numbers are colored if we do the entire block
     }
 }
 
@@ -68,8 +70,8 @@ function draw(em) {
 //write: string -> string
 //takes innterHTML of parent element of %p tag(s) and formats to code style blocks 
 //http://jsfiddle.net/m9eLk17a/1/  
-function write(){
-  text = text.replace(/\n/g, "<br/>").replace(/<\/p><p>/g, "<br/><br/>").replace(/<\/p>|<p>/g,""); 
+function write(t){
+  var text = t.replace(/\n/g, "<br/>").replace(/<\/p><p>/g, "<br/><br/>").replace(/<\/p>|<p>/g,""); 
   
   console.log( text );
   regexExpression = "("+del+"|"+rev+")";
