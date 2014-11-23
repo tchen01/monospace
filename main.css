@@ -1,67 +1,72 @@
 .block_container{
-    display: inline; 
-    white-space: nowrap;
-    /* why the hell isn't this showing up in chrome. The style doesn't even get applied. If i apply it using console it works as intended */
+  display: inline; 
+  white-space: nowrap;
+  /* why the hell isn't this showing up in chrome. The style doesn't even get applied. If i apply it using console it works as intended */
 }
 
 .code {
-    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
 
-    background: rgb(230,230,250);
-    /* color: black; */
-    
-    width: 100%;
-    
-    padding: .3em;
-    box-sizing: border-box;
+  background: rgb(230,230,250);
+  /* color: black; */
+  
+  width: 100%;
+  
+  padding: .3em;
+  margin: .5em;
+  box-sizing: border-box;
 
-    border: 1px solid lightgrey;
-    border-radius: .3em;
-    overflow-x: auto;
-    
-    
+  border: 1px solid lightgrey;
+  border-radius: .3em;
+  overflow-x: auto;
+  
+  
 }
 
 /* .code > p */
 .text{
-    padding-left: .5em;
-    display: inline-block;
+  padding-left: .5em;
+  display: inline-block;
 }
 
 /* .code > div */
 .numbers{
-    width: 1em;
-    display: inline-block;
-    border-right: 1px solid lightgrey;
-    padding-right: .5em;
-    text-align: right;
-    
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  width: 1em;
+  display: inline-block;
+  border-right: 1px solid lightgrey;
+  padding-right: .5em;
+  text-align: right;
+  
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.code.inline{
+  margin: 0;s
 }
 .inline{
-    display: inline-block;   
-    width: inherit; /* single line overflow won't be handled since it will just go off the page. */
-    margin: 0 0 -.4em 0; /* this puts it at the same height as other text but some of the bottoms are cut off. */
-    padding: 0;
+  display: inline-block;   
+  width: inherit; /* single line overflow won't be handled since it will just go off the page. */
+  margin: 0 0 -.4em 0; /* this puts it at the same height as other text but some of the bottoms are cut off. */
+  padding: 0;
 }
 
 .inline .text{
-    padding: 0 .2em 0 .2em;
+  padding: 0 .2em 0 .2em;
 }
 
 /* change this to a class or  */
 p.inline{
-    display: inline-block;   
+  display: inline-block;   
 }
 
 pre{
-    width: inherit !important;
-    margin: 0;
-    padding: 0;
-    display: inline-block;
+  width: inherit !important;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
 }

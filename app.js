@@ -49,8 +49,6 @@ function nBuild(nt) {
 
 
 function draw(em) {
-  console.log( em.innerHTML);
-  console.log( em.innerText);
   html = em.innerHTML;
   var stop_index = html.lastIndexOf(rev);
   var start_index = html.indexOf(del);
@@ -69,7 +67,9 @@ function draw(em) {
 //takes innterHTML of parent element of %p tag(s) and formats to code style blocks 
 //http://jsfiddle.net/m9eLk17a/1/  
 function write(t){
+  console.log(t);
   var text = t.replace(del+"\n", del).replace("\n" + rev, rev).replace(/\n/g, "<br/>").replace(/<\/p><p>/g, "<br/><br/>").replace(/<\/p>|<p>/g,""); 
+  // replacing del+"\n" removes line breaks after a code block if del === rev. better way to handle this is probably to remove them at the end.
   
   console.log( text );
   regexExpression = "("+del+"|"+rev+")";
@@ -109,6 +109,7 @@ function write(t){
         }
     }
     newtext += "<p class='inline'>" + text_hold + code_hold + "</p>";
+    newtext = newtext.replace(/<p class='inline'><\/p>/g, "");
     console.log( newtext );
     return newtext;
 }
