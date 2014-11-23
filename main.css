@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .mchat.code{
     width: 170px;
     padding: 0;
@@ -11,6 +12,14 @@
     z-index: 99;
 } */
 
+=======
+.block_container{
+    display: inline; 
+    white-space: nowrap;
+    /* why the hell isn't this showing up in chrome. The style doesn't even get applied. If i apply it using console it works as intended */
+}
+
+>>>>>>> origin/MutationObserver
 .code {
     font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
 
@@ -24,6 +33,7 @@
 
     border: 1px solid lightgrey;
     border-radius: .3em;
+    overflow-x: auto;
     
     position: relative; 
     overflow-x: auto
@@ -39,7 +49,7 @@
 
 /* .code > div */
 .numbers{
-    width: 6%;
+    width: 1em;
     display: inline-block;
     border-right: 1px solid lightgrey;
     padding-right: .5em;
@@ -53,9 +63,15 @@
     user-select: none;
 }
 .inline{
+<<<<<<< HEAD
     display: inline;   
     width: auto;
     margin: 0;
+=======
+    display: inline-block;   
+    width: inherit; /* single line overflow won't be handled since it will just go off the page. */
+    margin: 0 0 -.4em 0; /* this puts it at the same height as other text but some of the bottoms are cut off. */
+>>>>>>> origin/MutationObserver
     padding: 0;
 }
 
@@ -64,11 +80,17 @@
 }
 
 /* change this to a class or  */
+<<<<<<< HEAD
 p{
     display: inline;   
+=======
+p.inline{
+    display: inline-block;   
+>>>>>>> origin/MutationObserver
 }
 
 pre{
+    width: inherit !important;
     margin: 0;
     padding: 0;
     display: inline-block;
