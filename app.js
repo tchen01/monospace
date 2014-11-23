@@ -74,14 +74,11 @@ function draw(em) {
 function write(t){
   console.log( t) ;
   
-  //this doesm't work properly for small chat since they are %span elements and have a lot of extra stuff inside them
   var text = t.replace(del+"\n", del).replace("\n" + rev, rev).replace(/\n/g, "<br/>"); 
   
   console.log( text );
   regexExpression = "("+del+"|"+rev+")";
   regex = new RegExp(regexExpression, "g");
-  texts = text.split( regex );
-  codes = text.match( regex );
   newtext = "";
   text_hold = "";
   code_hold = "";
