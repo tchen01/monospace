@@ -1,9 +1,6 @@
 .block_container {
     display: inline;
     white-space: nowrap;
-    /* FIXME why isn't this showing up in chrome?
-     * The style doesn't even get applied.
-     * If I apply it using console it works as intended */
 }
 
 .code {
