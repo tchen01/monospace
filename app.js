@@ -53,7 +53,7 @@ function nBuild(nt) {
 
 
 function draw(em) {
-    html = em.innerHTML;
+    html = em.innerText;
     var stop_index = html.lastIndexOf(rev);
     var start_index = html.indexOf(del);
 
