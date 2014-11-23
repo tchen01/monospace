@@ -40,27 +40,29 @@ function monospaceListen() {
 
 //I believe that these functions should work in the small chat as is
 function nBuild(nt) {
-    n = "";
-    for (m = 0; m < nt.split('<br/>').length; m++) {
-        n += "<br/>" + (m + 1);
-    }
-    return n.substring(5, n.length);
+  n = "";
+  for (m = 0; m < nt.split('<br/>').length; m++) {
+      n += "<br/>" + (m + 1);
+  }
+  return n.substring(5, n.length);
 }
 
 
 function draw(em) {
-    html = em.innerHTML;
-    var stop_index = html.lastIndexOf(rev);
-    var start_index = html.indexOf(del);
+  console.log( em.innerHTML);
+  console.log( em.innerText);
+  html = em.innerHTML;
+  var stop_index = html.lastIndexOf(rev);
+  var start_index = html.indexOf(del);
 
-    if (stop_index > start_index && start_index > -1) {
-      em.innerHTML = write(html);
-      var code = em.getElementsByTagName( "pre" );
-      for(var i=0; i<code.length; i++){
-        console.log( code[i] );
-        hljs.highlightBlock( code[i] );
-      }
+  if (stop_index > start_index && start_index > -1) {
+    em.innerHTML = write(html);
+    var code = em.getElementsByTagName( "pre" );
+    for(var i=0; i<code.length; i++){
+      console.log( code[i] );
+      hljs.highlightBlock( code[i] );
     }
+  }
 }
 
 //write: string -> string
