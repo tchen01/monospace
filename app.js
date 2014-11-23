@@ -97,18 +97,18 @@ function write(t) {
     words = text.split(regex);
     console.log(words);
     for (i = 0; i < words.length; i++) {
-        if (state == 0) {
-            if (words[i] == del) {
+        if (state === 0) {
+            if (words[i] === del) {
                 newtext += "<p class='inline'>" + text_hold + "</p>";
                 state = 1;
                 text_hold = "";
             } else {
                 text_hold += words[i];
             }
-        } else { //state == 1
-            if (words[i] == rev) {
+        } else { // state === 1
+            if (words[i] === rev) {
                 num = nBuild(code_hold);
-                if (num == 1) {
+                if (num === 1) {
                     // FIXME linebreaks next to delimiter not transfering.
                     newtext += "<div class='code inline'>";
                 } else {
