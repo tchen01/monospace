@@ -68,14 +68,20 @@ function draw(em) {
 //http://jsfiddle.net/m9eLk17a/1/  
 function write(t){
   console.log(t);
+  
+  /*
+  <p>```code```</p><p>text</p>
+  
+  <p>```code```
+text</p>
+
+  */
   var text = t.replace(del+"\n", del).replace("\n" + rev, rev).replace(/\n/g, "<br/>").replace(/<\/p><p>/g, "<br/><br/>").replace(/<\/p>|<p>/g,""); 
   // replacing del+"\n" removes line breaks after a code block if del === rev. better way to handle this is probably to remove them at the end.
   
   console.log( text );
   regexExpression = "("+del+"|"+rev+")";
   regex = new RegExp(regexExpression, "g");
-  texts = text.split( regex );
-  codes = text.match( regex );
   newtext = "";
   text_hold = "";
   code_hold = "";
