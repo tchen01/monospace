@@ -41,4 +41,5 @@ aside.alerting {
 select, button {
     font-size: 1.25em;
     margin-right: 1em;
+    margin-bottom: 1em;
 }

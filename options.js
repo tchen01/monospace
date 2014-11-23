@@ -24,5 +24,14 @@ function restoreOptions() {
     });
 }
 
+function restoreDefaults() {
+    var status = document.getElementById('restore-status');
+    status.classList.add('alerting');
+    setTimeout(function() {
+        status.classList.remove('alerting');
+    }, 2000);
+}
+
 document.addEventListener('DOMContentLoaded', restoreOptions);
 document.getElementById('save').addEventListener('click', saveOptions);
+document.getElementById('restore').addEventListener('click', restoreDefaults);
