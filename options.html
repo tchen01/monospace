@@ -2,10 +2,34 @@
 <html>
 
 <head>
-
+  <title>Monospace Options</title>
+  <link rel="stylesheet" href="options.css" type="text/css">
 </head>
 
 <body>
+  <section id="title">
+    <h1>Monospace Options</title>
+  </section>
+
+  <section id="hl-style-container">
+    <label for="hl-style">Syntax Highlight Style</label>
+    <select id="hl-style">
+      <option value="default">Default</option>
+      <option value="github">GitHub</option>
+      <option value="solarized_light">Solarized Light</option>
+      <option value="solarized_dark">Solarized Dark</option>
+      <option value="monokai">Monokai</option>
+      <option value="tomorrow">Tomorrow</option>
+      <option value="tomorrow-night">Tomorrow Night</option>
+    </select>
+  </section>
+
+  <section id="save-container">
+    <button id="save">Save</button>
+    <aside id="save-status">Options saved.</div>
+  </section>
+
+  <script src="options.js"></script>
 
 </body>
 

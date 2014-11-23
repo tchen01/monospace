@@ -4,6 +4,9 @@
     "version": "0",
     "description": "A plain text description",
     "options_page": "options.html",
+    "permissions": [
+        "storage"
+    ],
 
     "web_accessible_resources": [
         "app.js",
