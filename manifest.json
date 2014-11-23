@@ -3,6 +3,7 @@
     "name": "monospace",
     "version": "0",
     "description": "A plain text description",
+    "options_page": "options.html",
 
     "web_accessible_resources": [
         "app.js",
