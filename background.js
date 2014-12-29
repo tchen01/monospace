@@ -3,17 +3,15 @@
  * @author Jesse Mu, Tyler Chen
  */
 
-var url = document.URL;
-console.log( url.indexOf('messages') );
-if( url.indexOf('messages') < 0 ){
-    var script = document.createElement("script");
+var script = document.createElement("script");
+
+if (document.URL.indexOf("messages") === -1) {
     script.src = chrome.extension.getURL("app.js");
-    document.head.appendChild(script);
 } else {
-    var message = document.createElement("script");
-    message.src = chrome.extension.getURL("message.js");
-    document.head.appendChild(message);
+    script.src = chrome.extension.getURL("message.js");
 }
+
+document.head.appendChild(script);
 
 var highlightjs = document.createElement("script");
 highlightjs.src = chrome.extension.getURL("highlight/highlight.pack.js");
