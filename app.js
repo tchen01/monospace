@@ -44,10 +44,22 @@ function nBuild(nt) {
     return n.substring(5, n.length);
 }
 
-var del = "```";
-var rev = del.split('').reverse().join('');
+var del;
+var rev;
+function getVars(){
+    var monospace = document.getElementById('monospace');
+    var obj = monospace.getAttribute('data-vars');
+    var obj = obj.substring(0, obj.length - 1);
+    var vars = JSON.parse("{" + obj + "}");
+    del  = vars.del;
+    rev = del.split('').reverse().join('');
+}
+//listen for data-vars to be updated.
+getVars();
 
 function draw(em) {
+
+    console.log( del );
     html = em.innerHTML;
     var stop_index = html.lastIndexOf(rev);
     var start_index = html.indexOf(del);
