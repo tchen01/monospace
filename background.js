@@ -16,10 +16,12 @@ var monospace = document.getElementById('monospace');
 
 var style = document.createElement("link");
 style.rel = "stylesheet";
-style.id = "monospaceStyles"
+style.id = "monospaceStyles";
 style.href = chrome.extension.getURL("highlight/styles/default.css");
 document.head.appendChild(style);
 
+// theme .hljs css needs to be updated for each theme (see default.css) or overridden in main.css 
+// background of code (and numbers) must be changed to match style even though hljs is not applied to them (put style for that block into each theme?)
 var monospaceStyles = document.getElementById('monospaceStyles');
 
 //change monospaceStyles.href on update.
@@ -28,8 +30,9 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
     updateVars()
     for (key in changes) {
       var storageChange = changes[key];
-      //console.log('Storage key "%s" in namespace "%s" changed. ' + 'Old value was "%s", new value is "%s".', key, namespace,storageChange.oldValue,storageChange.newValue);}
-    });
+      //console.log('Storage key "%s" in namespace "%s" changed. ' + 'Old value was "%s", new value is "%s".', key, namespace,storageChange.oldValue,storageChange.newValue);
+    }
+});
 
 function updateVars(){
     chrome.storage.sync.get(function(e){
