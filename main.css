@@ -23,6 +23,7 @@
 /* .code > p */
 .text {
     padding-left: .5em;
+    width: 87%;
     display: inline-block;
 }
 
