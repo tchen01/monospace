@@ -17,7 +17,7 @@ var monospace = document.getElementById('monospace');
 var style = document.createElement("link");
 style.rel = "stylesheet";
 style.id = "monospaceStyles";
-style.href = chrome.extension.getURL("highlight/styles/default.css");
+style.href = chrome.extension.getURL("highlight/styles/dark.css");
 document.head.appendChild(style);
 
 // theme .hljs css needs to be updated for each theme (see default.css) or overridden in main.css 

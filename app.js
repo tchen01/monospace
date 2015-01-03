@@ -125,7 +125,7 @@ function write(t) {
                     newtext += "<div class='code inline'>";
                 } else {
                     newtext +=
-                        ("<div class='code'><div class='block_container'><div class='numbers'>" +
+                        ("<div class='code hljs'><div class='block_container'><div class='numbers'>" +
                          nBuild(code_hold) +
                          "</div>");
                 }
