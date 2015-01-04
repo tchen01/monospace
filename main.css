@@ -5,25 +5,21 @@
 
 .code {
     font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
-
-    background: rgb(230,230,250);
-    /* color: black; */
-
     width: 100%;
 
     padding: .3em;
+    margin: .3em;
     box-sizing: border-box;
 
-    border: 1px solid lightgrey;
     border-radius: .3em;
     overflow-x: auto;
-
 
 }
 
 /* .code > p */
 .text {
     padding-left: .5em;
+    width: 87%;
     display: inline-block;
 }
 
