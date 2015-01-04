@@ -1,7 +1,9 @@
 // Saves options to chrome.storage
 
-//set current del as value attribute
+//todo:
+//set current del/style as value attribute for respective forms
 //refresh drawing when del is updated.
+//dynamically build styles in options.html??
 
 function saveOptions() {
     var hlStyle = document.getElementById('hl-style').value;
