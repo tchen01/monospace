@@ -4,10 +4,13 @@ Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiac
 
 */
 
-.hljs {
+.hljs , 
+.code{
+    background: #E6E6FA;
 }
 
 .hljs,
+.code,
 .hljs-subst,
 .hljs-tag .hljs-title,
 .nginx .hljs-title {

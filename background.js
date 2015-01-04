@@ -14,6 +14,13 @@ document.head.appendChild(script);
 
 var monospace = document.getElementById('monospace');
 
+
+if (document.URL.indexOf("messages") !== -1) {
+    var msg = document.createElement("script");
+    msg.src = chrome.extension.getURL("message.js");
+    document.head.appendChild(msg);
+}
+
 var style = document.createElement("link");
 style.rel = "stylesheet";
 style.id = "monospaceStyles";
@@ -41,7 +48,13 @@ function updateVars(){
             vars += '"' + key + '":"' + e[key] + '",';
         }
         monospace.setAttribute('data-vars', vars);
-    }); 
+        
+        var obj = monospace.getAttribute('data-vars');
+        var obj = obj.substring(0, obj.length - 1);
+        var obj = JSON.parse("{" + obj + "}");
+
+        monospaceStyles.href = chrome.extension.getURL("highlight/styles/" + obj.hlStyle + ".css");
+    });
 }
 
 updateVars();

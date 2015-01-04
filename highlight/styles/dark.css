@@ -4,7 +4,8 @@ Dark style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Or
 
 */
 
-.hljs {
+.hljs , 
+.code{
   background: #444;
   -webkit-text-size-adjust: none;
 }
@@ -20,6 +21,7 @@ Dark style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Or
 }
 
 .hljs,
+.code,
 .hljs-subst {
   color: #ddd;
 }

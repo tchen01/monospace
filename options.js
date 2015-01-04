@@ -1,4 +1,8 @@
 // Saves options to chrome.storage
+
+//set current del as value attribute
+//refresh drawing when del is updated.
+
 function saveOptions() {
     var hlStyle = document.getElementById('hl-style').value;
     var delValue = document.getElementById('del-style').value;

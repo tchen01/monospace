@@ -10,6 +10,7 @@
 
     "web_accessible_resources": [
         "app.js",
+        "message.js",
         "highlight/highlight.pack.js", 
         "highlight/styles/*"
     ],
