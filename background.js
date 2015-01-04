@@ -27,17 +27,13 @@ style.id = "monospaceStyles";
 style.href = chrome.extension.getURL("highlight/styles/dark.css");
 document.head.appendChild(style);
 
-// theme .hljs css needs to be updated for each theme (see default.css) or overridden in main.css 
-// background of code (and numbers) must be changed to match style even though hljs is not applied to them (put style for that block into each theme?)
+// theme .hljs css needs to be updated for each theme (see dark.css) or overridden in main.css 
 var monospaceStyles = document.getElementById('monospaceStyles');
 
-//change monospaceStyles.href on update.
-//reinject script or have listener in app.js???
 chrome.storage.onChanged.addListener(function(changes, namespace) {
     updateVars()
     for (key in changes) {
       var storageChange = changes[key];
-      //console.log('Storage key "%s" in namespace "%s" changed. ' + 'Old value was "%s", new value is "%s".', key, namespace,storageChange.oldValue,storageChange.newValue);
     }
 });
 
@@ -52,7 +48,8 @@ function updateVars(){
         var obj = monospace.getAttribute('data-vars');
         var obj = obj.substring(0, obj.length - 1);
         var obj = JSON.parse("{" + obj + "}");
-
+        
+        //reinject JS here if del changes?
         monospaceStyles.href = chrome.extension.getURL("highlight/styles/" + obj.hlStyle + ".css");
     });
 }
