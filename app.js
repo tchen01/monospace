@@ -54,7 +54,7 @@ function getVars(){
     var obj = obj.substring(0, obj.length - 1);
     var vars = JSON.parse("{" + obj + "}");
     del  = vars.del;
-    rev = del.split('').reverse().join('');
+    rev = vars.rev;
 }
 getVars();
 
