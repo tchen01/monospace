@@ -56,6 +56,7 @@ function restoreDefaults() {
     revElement.value = '```';
     revCheck.checked = false;
     saveOptions();
+    
     var status = document.getElementById('restore-status');
     status.classList.add('alerting');
     setTimeout(function() {

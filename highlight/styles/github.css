@@ -4,10 +4,8 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 */
 
-.hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
+.hljs,
+.code{
   color: #333;
   background: #f8f8f8;
   -webkit-text-size-adjust: none;
