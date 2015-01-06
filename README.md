@@ -6,8 +6,10 @@ Currently only supports Facebook chat.
 
 This repository needs a better name.
 
-TODO: 
-  - get mutation observer working for small and large chats
-  - add user customizable options
-  - clean up excess styles from highlight
-  - more sites
+Roadmap: 
+ - publish Facebook only extension
+ - add support for other sites
+  - files viewed in browser (.js, .css, etc)
+  - Gmail (and other large websites) 
+ - add option to DOM walk any webpage
+ - port to Firefox
