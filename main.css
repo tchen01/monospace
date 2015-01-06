@@ -13,7 +13,7 @@
 
     border-radius: .3em;
     overflow-x: auto;
-
+    text-shadow: none;
 }
 
 /* .code > p */
