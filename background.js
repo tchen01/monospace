@@ -8,15 +8,16 @@ highlightjs.src = chrome.extension.getURL("highlight/highlight.pack.js");
 document.head.appendChild(highlightjs);
 
 var script = document.createElement("script");
-script.id = 'monospace';
+script.id = 'appJS';
 script.src = chrome.extension.getURL("app.js");
 document.head.appendChild(script);
 
-var monospace = document.getElementById('monospace');
+var appJS = document.getElementById('appJS');
 
 
 if (document.URL.indexOf("messages") !== -1) {
     var msg = document.createElement("script");
+    msg.id='messageJS'
     msg.src = chrome.extension.getURL("message.js");
     document.head.appendChild(msg);
 }
@@ -43,9 +44,9 @@ function updateVars(){
         for (var key in e) {
             vars += '"' + key + '":"' + e[key] + '",';
         }
-        monospace.setAttribute('data-vars', vars);
+        appJS.setAttribute('data-vars', vars);
         
-        var obj = monospace.getAttribute('data-vars');
+        var obj = appJS.getAttribute('data-vars');
         var obj = obj.substring(0, obj.length - 1);
         var obj = JSON.parse("{" + obj + "}");
         
