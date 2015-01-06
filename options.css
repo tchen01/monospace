@@ -1,29 +1,46 @@
 body, html {
+    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+    
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
-    /* font-size: 1.25em; */
 }
 
 body {
-    background-color: #E7FDFF;
+    margin: 5% 0 0 35%;
+    width: 30%;
+    height: 80%;
+    background-color: #FFFFFF;
 }
 
 section {
-    padding: 1.5em;
-    min-height: 100px;
+    display: table;
+    vertical-align: middle;
+    width: 100%;
+    padding: 1.5em 0 1.5em 7em;
+}
+
+section{
+    background-color: #EEEEEE;
 }
 
 section:nth-child(even) {
-    background-color: #CEFBFF;
+    background-color: #DDDDDD;
 }
 
 h1 {
     font-size: 2.25em;
 }
+input, select{
+    width: 35%;
+}
 
-label, aside {
+#rev-check{
+    width: auto;
+}
+
+label, aside{
     font-size: 1.25em;
     margin-right: 1em;
     display: inline-block;
@@ -38,8 +55,10 @@ aside.alerting {
     opacity: 1;
 }
 
+
 select, button {
     font-size: 1.25em;
+    font-family: inherit;
     margin-right: 1em;
     margin-bottom: 1em;
 }

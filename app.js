@@ -131,6 +131,8 @@ function write(t){
     console.log( newtext );
     return newtext;
 }
+
+
 var SMcheckForMsg = setInterval(function() {
     var SMmsgWindow = document.getElementById('ChatTabsPagelet');
     if (SMmsgWindow !== null) {
