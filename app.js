@@ -1,3 +1,7 @@
+/**
+ * Contains main functions for monospace
+ * @author Tyler Chen, Jesse Mu
+ */
 
 function nBuild(nt) {
     n = "";
@@ -9,6 +13,8 @@ function nBuild(nt) {
 
 var del;
 var rev;
+
+//only works if #appJS exists (defined from a content-script)
 function getVars(){
     var monospace = document.getElementById('appJS');
     var obj = monospace.getAttribute('data-vars');
@@ -17,7 +23,6 @@ function getVars(){
     del  = vars.del;
     rev = vars.rev;
 }
-getVars();
 
 function draw(em) {
     html = em.innerText;

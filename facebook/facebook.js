@@ -10,6 +10,8 @@ var observerConfig = {
     attributes: false
 };
 
+getVars();
+
 //draws on code blocks when large chat is updated
 //should only be used on https://www.facebook.com/messages
 function SMmonospaceListen() {
