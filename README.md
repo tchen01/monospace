@@ -2,12 +2,13 @@
 
 Display monospaced text blocks instantly in Chrome!
 
-Currently only supports Facebook chat.
+Currently only supports Facebook chat and certain files viewed using Chrome.
 
 This repository needs a better name.
 
-TODO: 
-  - get mutation observer working for small and large chats
-  - add user customizable options
-  - clean up excess styles from highlight
-  - more sites
+Roadmap: 
+ - publish Facebook only extension
+ - add support for other sites
+  - Gmail (and other large websites) 
+ - add option to DOM walk any webpage
+ - port to Firefox
