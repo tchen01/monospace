@@ -14,11 +14,14 @@ document.head.appendChild(script);
 
 var appJS = document.getElementById('appJS');
 
+var facebook = document.createElement("script");
+facebook.src = chrome.extension.getURL("facebook/facebook.js");
+document.head.appendChild(facebook);
 
 if (document.URL.indexOf("messages") !== -1) {
     var msg = document.createElement("script");
     msg.id='messageJS'
-    msg.src = chrome.extension.getURL("message.js");
+    msg.src = chrome.extension.getURL("facebook/message.js");
     document.head.appendChild(msg);
 }
 

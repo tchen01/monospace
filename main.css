@@ -25,7 +25,7 @@
 
 /* .code > div */
 .numbers {
-    width: 1em;
+    width: 1.5em;
     display: inline-block;
     border-right: 1px solid lightgrey;
     padding-right: .5em;

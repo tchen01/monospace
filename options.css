@@ -36,7 +36,7 @@ input, select{
     width: 35%;
 }
 
-#rev-check{
+#rev-check, #num-check{
     width: auto;
 }
 

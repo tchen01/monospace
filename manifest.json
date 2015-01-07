@@ -10,14 +10,21 @@
 
     "web_accessible_resources": [
         "app.js",
-        "message.js",
+        "facebook/*",
         "highlight/highlight.pack.js", 
         "highlight/styles/*"
     ],
-
-    "content_scripts": [{
+    
+    "content_scripts": [
+    {
         "matches": ["http://*.facebook.com/*", "https://*.facebook.com/*"],
         "css": ["main.css"],
-        "js": ["background.js"]
+        "js": ["facebook/background.js"]
+    },
+    
+    {
+        "matches": ["http://*/*.js", "http://*/*.css", "http://*/*.py"],
+        "css": ["main.css"],
+        "js": ["highlight/highlight.pack.js", "app.js", "files.js"]
     }]
 }
