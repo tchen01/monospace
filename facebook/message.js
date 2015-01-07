@@ -14,7 +14,8 @@ function monospaceListen() {
                     var cfx = m.addedNodes[l].getElementsByClassName( "_38" );
                     
                     for(c=0; c<cfx.length; c++){
-                      draw(cfx[c].firstChild);
+                        cfx[c].firstChild.innerHTML = cfx[c].firstChild.innerHTML.replace(/(<\/p><p>)/g, "<br/><br/>");
+                        draw(cfx[c].firstChild);
                       //%div._38 -> %span -> %p
                     }
                 }

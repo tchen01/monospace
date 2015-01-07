@@ -23,7 +23,7 @@
     },
     
     {
-        "matches": ["http://*/*.js", "http://*/*.css", "http://*/*.py"],
+        "matches": ["*://*/*.js", "*://*/*.css", "*://*/*.py",   "file:///*.js", "file:///*.css", "file:///*.py"],
         "css": ["main.css"],
         "js": ["highlight/highlight.pack.js", "app.js", "files.js"]
     }]

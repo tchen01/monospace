@@ -1,28 +1,37 @@
 var style = document.createElement("link");
 style.rel = "stylesheet";
 style.id = "monospaceStyles";
-style.href = chrome.extension.getURL("highlight/styles/dark.css");
+style.href = chrome.extension.getURL("highlight/styles/default.css");
 document.head.appendChild(style);
 var monospaceStyles = document.getElementById('monospaceStyles');
 
-chrome.storage.onChanged.addListener(function(changes, namespace) {
-    updateVars();
-});
-
-function updateVars(){
+function updateStyles(){
     chrome.storage.sync.get(function(e){
         monospaceStyles.href = chrome.extension.getURL("highlight/styles/" + e.hlStyle + ".css");
+
+        if( e.numbers === true ){
+        num.style.display = "none";
+        } else {
+        num.style.display = "inline-block";
+        }
     });
 }
 
-updateVars();
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+    updateStyles();
+});
+
+updateStyles();
+
+document.body.classList.add("hljs");
 
 pre = document.getElementsByTagName( 'pre' )[0];
 text = pre.innerText;
 
-document.body.classList.add("hljs");
 document.body.innerHTML = "<div class='code' style='font-size:12pt; line-height: 1em;'><div class='block_container'><div class='numbers'>" + nBuild( text.replace(/\n/g, "<br/>") ) +"</div><pre class='text'></pre></div></div>"
 
+num = document.getElementsByClassName( 'numbers' )[0];
 pre = document.getElementsByTagName( 'pre' )[0];
 pre.innerText = text;
 hljs.highlightBlock( pre );
+

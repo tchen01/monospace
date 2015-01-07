@@ -4,15 +4,20 @@
  */
 
 function nBuild(nt) {
-    n = "";
-    for (m = 0; m < nt.split('<br/>').length; m++) {
-        n += "<br/>" + (m + 1);
+    if( numbers === "true" ){ 
+        return true 
+    } else {
+        n = "";
+        for (m = 0; m < nt.split('<br/>').length; m++) {
+            n += "<br/>" + (m + 1);
+        }
+        return n.substring(5, n.length);
     }
-    return n.substring(5, n.length);
 }
 
 var del;
 var rev;
+var numbers;
 
 //only works if #appJS exists (defined from a content-script)
 function getVars(){
@@ -22,10 +27,12 @@ function getVars(){
     var vars = JSON.parse("{" + obj + "}");
     del  = vars.del;
     rev = vars.rev;
+    numbers = vars.numbers;
 }
 
 function draw(em) {
     html = em.innerText;
+    
     var stop_index = html.lastIndexOf(rev);
     var start_index = html.indexOf(del);
 
@@ -35,18 +42,22 @@ function draw(em) {
         var code = em.getElementsByTagName( "pre" );
         for(var i=0; i<code.length; i++){
             // console.log( code[i] );
+            //code[i].innerText = code[i].innerHTML.replace(/(<br>)/g, "\n");
             hljs.highlightBlock( code[i] );
         }
     }
 }
+/**
+WRITE function should take an element and do stuff to it rather than string things. 
+Strings mean if you write stuff that looks like HTML it will be interpreted as HTML 
 
+*/
 //write: string -> string
 //takes innterHTML of parent element of %p tag(s) and formats to code style blocks 
 //http://jsfiddle.net/m9eLk17a/1/  
 function write(t){
     console.log( t ) ;
     
-    //this causes input such as: [ text\n```code```\ntext ] to be written to one line rather than 3
     //.replace(del+"\n", del).replace("\n" + rev, rev)
     var text = t.replace(/\n/g, "<br/>"); 
       
@@ -74,10 +85,13 @@ function write(t){
         } else { //state == 1
             if( words[i] === rev ){
                 num = nBuild( code_hold );
-                if( num == 1){
-                  newtext += "<div class='code inline'>";
+                console.log(num);
+                if( num === "1"){
+                  newtext += "<div class='code inline'><div>";
+                } else if( num === true) {
+                    newtext += "<div class='code'><div class='block_container'>"
                 } else {
-                  newtext += "<div class='code'><div class='block_container'><div class='numbers'>" + nBuild( code_hold ) +"</div>";
+                    newtext += "<div class='code'><div class='block_container'><div class='numbers'>" + nBuild( code_hold ) +"</div>";
                 }
                 newtext += "<pre class='text'>" + code_hold + "</pre></div></div>";
                 console.log( code_hold );

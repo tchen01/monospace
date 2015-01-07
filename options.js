@@ -6,17 +6,18 @@
 //todo:
 //refresh drawing when del is updated.
 //dynamically build styles in options.html from directory containing styles??
-//user uploaded files
 var hlStyleElement = document.getElementById('hl-style');
 var delElement = document.getElementById('del-style');
 var revCheck = document.getElementById('rev-check');
 var revElement = document.getElementById('rev-style');
+var numCheck = document.getElementById('num-check');
 function saveOptions() {
     chrome.storage.sync.set({
         hlStyle: hlStyleElement.value,
         del: delElement.value,
         rev: revElement.value,
         revChecked: revCheck.checked,
+        numbers: numCheck.checked, //false if visible
     }, function() {
         // Update status to let user know options were saved.
         var status = document.getElementById('save-status');
@@ -42,11 +43,13 @@ function restoreOptions() {
         del: '```',
         rev: '```',
         revChecked: false,
+        numbers: false,
     }, function(items) {
         hlStyleElement.value = items.hlStyle;
         delElement.value = items.del;
         revElement.value = items.rev;
         revCheck.checked = items.revChecked;
+        numCheck.checked = items.numbers
     });
 }
 
@@ -55,6 +58,7 @@ function restoreDefaults() {
     delElement.value = '```';
     revElement.value = '```';
     revCheck.checked = false;
+    numCheck.checked = false;
     saveOptions();
     
     var status = document.getElementById('restore-status');

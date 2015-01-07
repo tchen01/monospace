@@ -21,6 +21,7 @@
     padding-left: .5em;
     width: 87%;
     display: inline-block;
+    vertical-align: top;
 }
 
 /* .code > div */
