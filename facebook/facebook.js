@@ -28,6 +28,7 @@ function SMmonospaceListen() {
                   // console.log( cfx );
                   for(c=0; c<cfx.length; c++){
                     // console.log( cfx[c].firstChild.firstChild );
+                    console.log(cfx[c].firstChild.firstChild.innerText);
                     draw(cfx[c].firstChild.firstChild);
                   }
                 }

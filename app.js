@@ -27,11 +27,21 @@ function nBuild(nt) {
 }
 
 function draw(em){
+    var text = em.innerText;
+    
+    var stopIndex = text.lastIndexOf(rev);
+    var startIndex = text.indexOf(del);
+
+    if (stopIndex > startIndex && startIndex > -1) {
+        write(em);
+    }
+    
+}
+
+function write(em){
     var text = em.innerText.replace(/\n/g, "<br/>"); 
-    console.log(text);
     var regex = new RegExp("("+del+"|"+rev+"|<br/>)", "g");
-    var words = text.split( regex ); //may need "" filtered out
-    console.log(words);
+    var words = text.split( regex ).filter(function(a){ return a !== ""; }); //may need "" filtered out
     em.innerHTML = '';
     var state = 0; //1: in code area
     var textHold = '';
@@ -41,7 +51,7 @@ function draw(em){
             if( words[i] === del ){
                 var p = document.createElement( 'p' );
                 p.classList.add('inline');
-                p.innerText = textHold;
+                p.innerText = textHold; //some logic if textHold is empty (prevent new line in render)
                 em.appendChild(p);
                 
                 state = 1;
@@ -65,16 +75,19 @@ function draw(em){
                 var code = document.createElement( 'div' );
                 code.classList.add( 'code' );
                 codeHold = codeHold.replace(/(<br\/>)/g, "\n");
+                
+                var pre = document.createElement( 'pre' );
+               
                 if( num === "1" ){
                     code.classList.add( 'inline' );
+                    pre.classList.add( 'inline' );
                 } else {
                     var numbers = document.createElement( 'div' );
                     numbers.classList.add( 'numbers' );
                     numbers.innerHTML = num;
                     code.appendChild( numbers );                    
                 }
-                var pre = document.createElement( 'pre' );
-                pre.classList.add( 'text' );
+                 pre.classList.add( 'text' );
                 pre.innerText = codeHold;
                 hljs.highlightBlock( pre );
                 code.appendChild( pre );

@@ -15,10 +15,10 @@
 /* .code > p */
 .text {
     padding-left: .5em;
-    width: 85%;
+    width: calc( 100% - 3em ); /* Better way? */
     display: inline-block;
     vertical-align: top;
-        overflow-x: auto;
+    overflow-x: auto;
 
     white-space: nowrap;
 }
@@ -41,7 +41,7 @@
 
 .inline {
     display: inline-block;
-    width: inherit; /* single line overflow won't be handled since it will just go off the page. */
+    width: auto; /* single line overflow won't be handled since it will just go off the page. */
     margin: 0 0 -.4em 0; /* this puts it at the same height as other text but some of the bottoms are cut off. */
     padding: 0;
 }

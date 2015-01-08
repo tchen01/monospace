@@ -28,7 +28,8 @@ document.body.classList.add("hljs");
 pre = document.getElementsByTagName( 'pre' )[0];
 text = pre.innerText;
 
-document.body.innerHTML = "<div class='code' style='font-size:12pt; line-height: 1em;'><div class='block_container'><div class='numbers'>" + nBuild( text.replace(/\n/g, "<br/>") ) +"</div><pre class='text'></pre></div></div>"
+document.body.innerHTML = "<div class='code' style='font-size:12pt; line-height: 1em;'><div class='numbers'>" + nBuild( text.replace(/\n/g, "<br/>") ) +"</div><pre></pre></div>"
+//update this to a better method.
 
 num = document.getElementsByClassName( 'numbers' )[0];
 pre = document.getElementsByTagName( 'pre' )[0];
