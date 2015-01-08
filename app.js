@@ -20,7 +20,7 @@ function getVars(){
 
 function nBuild(nt) {
     n = "";
-    for (m = 0; m < nt.split('<br/>').length; m++) {
+    for (m = 0; m < nt.split('\n').length; m++) {
         n += "<br/>" + (m + 1);
     }
     return n.substring(5, n.length);
@@ -41,11 +41,10 @@ function draw(em){
 
 //formats snippets of code from element objects
 function write(em){
-    var text = em.innerText.replace(/\n/g, "<br/>"); //why do we do this? I think it might not be necessary
-    var regex = new RegExp("("+del+"|"+rev+"|<br/>)", "g");
-    var words = text.split( regex ).filter(function(a){ return a !== ""; }); 
+    var regex = new RegExp("("+del+"|"+rev+"|\n)", "g");
+    var words = em.innerText.split( regex ).filter(function(a){ return a !== ""; }); 
     em.innerHTML = '';
-    var state = 0; //1: in code area
+    var state = 0; 
     var textHold = '';
     var codeHold = '';
     for(var i=0; i<words.length; i++){
@@ -58,18 +57,7 @@ function write(em){
                     em.appendChild(p);
                     textHold = '';
                 }
-                state = 1;
-            } else if( words[i] === "<br/>" ){
-                if( textHold !== '' ){
-                    var p = document.createElement( 'p' );
-                    p.classList.add('inline');
-                    p.innerText = textHold;
-                    em.appendChild(p);
-                    textHold = '';
-                }
-                var br = document.createElement( 'br' );
-                em.appendChild(br);
-                
+                state = 1;        
             } else {
                 textHold += words[i];
             }
@@ -78,7 +66,6 @@ function write(em){
                 var num = nBuild( codeHold );
                 var code = document.createElement( 'div' );
                 code.classList.add( 'code' );
-                codeHold = codeHold.replace(/(<br\/>)/g, "\n");
                 
                 var pre = document.createElement( 'pre' );
                
@@ -98,12 +85,6 @@ function write(em){
                 em.appendChild( code );
                 state = 0;
                 codeHold = '';
-            } else if( words[i] === "<br/>"){
-                if(words[i-1] === del || words[i+1] === rev){
-                    console.log('skip');
-                } else {
-                    codeHold += words[i];
-                }
             } else {
                 codeHold += words[i];   
             }
