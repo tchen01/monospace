@@ -26,6 +26,7 @@ function nBuild(nt) {
     return n.substring(5, n.length);
 }
 
+//checks if element object contains code snippets
 function draw(em){
     var text = em.innerText;
     
@@ -38,10 +39,11 @@ function draw(em){
     
 }
 
+//formats snippets of code from element objects
 function write(em){
-    var text = em.innerText.replace(/\n/g, "<br/>"); 
+    var text = em.innerText.replace(/\n/g, "<br/>"); //why do we do this? I think it might not be necessary
     var regex = new RegExp("("+del+"|"+rev+"|<br/>)", "g");
-    var words = text.split( regex ).filter(function(a){ return a !== ""; }); //may need "" filtered out
+    var words = text.split( regex ).filter(function(a){ return a !== ""; }); 
     em.innerHTML = '';
     var state = 0; //1: in code area
     var textHold = '';
@@ -49,23 +51,25 @@ function write(em){
     for(var i=0; i<words.length; i++){
         if( state === 0 ){ //outside code
             if( words[i] === del ){
-                var p = document.createElement( 'p' );
-                p.classList.add('inline');
-                p.innerText = textHold; //some logic if textHold is empty (prevent new line in render)
-                em.appendChild(p);
-                
+                if( textHold !== '' ){
+                    var p = document.createElement( 'p' );
+                    p.classList.add('inline');
+                    p.innerText = textHold; 
+                    em.appendChild(p);
+                    textHold = '';
+                }
                 state = 1;
-                textHold = '';
             } else if( words[i] === "<br/>" ){
-                var p = document.createElement( 'p' );
-                p.classList.add('inline');
-                p.innerText = textHold;
-                em.appendChild(p);
-                
+                if( textHold !== '' ){
+                    var p = document.createElement( 'p' );
+                    p.classList.add('inline');
+                    p.innerText = textHold;
+                    em.appendChild(p);
+                    textHold = '';
+                }
                 var br = document.createElement( 'br' );
                 em.appendChild(br);
                 
-                textHold = '';
             } else {
                 textHold += words[i];
             }
@@ -87,7 +91,7 @@ function write(em){
                     numbers.innerHTML = num;
                     code.appendChild( numbers );                    
                 }
-                 pre.classList.add( 'text' );
+                pre.classList.add( 'text' );
                 pre.innerText = codeHold;
                 hljs.highlightBlock( pre );
                 code.appendChild( pre );

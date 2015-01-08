@@ -19,8 +19,7 @@
     display: inline-block;
     vertical-align: top;
     overflow-x: auto;
-
-    white-space: nowrap;
+    word-wrap: normal;
 }
 
 /* .code > div */

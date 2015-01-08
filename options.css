@@ -8,25 +8,29 @@ body, html {
 }
 
 body {
-    margin: 5% 0 0 35%;
-    width: 30%;
-    height: 80%;
     background-color: #FFFFFF;
+}
+
+#section-container{
+    margin: 5% 35% 0 35%; /* why does top margin push down body?*/
+    width: 30%;
 }
 
 section {
     display: table;
     vertical-align: middle;
-    width: 50%;
+    width: 100%; 
     padding: 1.5em 20% 1.5em 25%;
+    box-sizing: border-box;
 }
 
-section{
-    background-color: #EEEEEE;
+
+section:nth-child(odd) {
+    background-color: rgba(230,230,230,.1);
 }
 
 section:nth-child(even) {
-    background-color: #DDDDDD;
+    background-color: rgba(30,30,30,.1);
 }
 
 h1 {
