@@ -11,7 +11,15 @@ var delElement = document.getElementById('del-style');
 var revCheck = document.getElementById('rev-check');
 var revElement = document.getElementById('rev-style');
 var numCheck = document.getElementById('num-check');
+
+var style = document.createElement("link");
+style.rel = "stylesheet";
+style.id = "monospaceStyles";
+document.head.appendChild(style);
+var monospaceStyles = document.getElementById('monospaceStyles');
+
 function saveOptions() {
+    monospaceStyles.href = chrome.extension.getURL("highlight/styles/" + hlStyleElement.value + ".css");
     chrome.storage.sync.set({
         hlStyle: hlStyleElement.value,
         del: delElement.value,
@@ -19,6 +27,7 @@ function saveOptions() {
         revChecked: revCheck.checked,
         numbers: numCheck.checked, //false if visible
     }, function() {
+    
         // Update status to let user know options were saved.
         var status = document.getElementById('save-status');
         status.textContent = 'Options saved.';
@@ -50,6 +59,8 @@ function restoreOptions() {
         revElement.value = items.rev;
         revCheck.checked = items.revChecked;
         numCheck.checked = items.numbers
+        monospaceStyles.href = chrome.extension.getURL("highlight/styles/" + items.hlStyle + ".css");
+
     });
 }
 
