@@ -1,3 +1,5 @@
+if( document.body.childElementCount === 1){
+
 var style = document.createElement("link");
 style.rel = "stylesheet";
 style.id = "monospaceStyles";
@@ -28,7 +30,7 @@ document.body.classList.add("hljs");
 pre = document.getElementsByTagName( 'pre' )[0];
 text = pre.innerText;
 
-document.body.innerHTML = "<div class='code' style='font-size:12pt; line-height: 1em;'><div class='numbers'>" + nBuild( text.replace(/\n/g, "<br/>") ) +"</div><pre></pre></div>"
+document.body.innerHTML = "<div class='code' style='font-size:12pt; line-height: 1em;'><div class='numbers'>" + nBuild( text ) +"</div><pre style='padding-left: 0.5em;'></pre></div>"
 //update this to a better method.
 
 num = document.getElementsByClassName( 'numbers' )[0];
@@ -36,3 +38,4 @@ pre = document.getElementsByTagName( 'pre' )[0];
 pre.innerText = text;
 hljs.highlightBlock( pre );
 
+}

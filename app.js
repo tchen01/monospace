@@ -47,6 +47,7 @@ function write(em){
     var state = 0; 
     var textHold = '';
     var codeHold = '';
+    console.log( words );
     for(var i=0; i<words.length; i++){
         if( state === 0 ){ //outside code
             if( words[i] === del ){
@@ -63,31 +64,40 @@ function write(em){
             }
         } else { //inside code (state === 0)
             if( words[i] === rev){
-                var num = nBuild( codeHold );
-                var code = document.createElement( 'div' );
-                code.classList.add( 'code' );
-                
-                var pre = document.createElement( 'pre' );
-               
-                if( num === "1" ){
-                    code.classList.add( 'inline' );
-                    pre.classList.add( 'inline' );
-                } else {
-                    var numbers = document.createElement( 'div' );
-                    numbers.classList.add( 'numbers' );
-                    numbers.innerHTML = num;
-                    code.appendChild( numbers );                    
+                if( codeHold !== '' ){
+
+                    var num = nBuild( codeHold );
+                    var code = document.createElement( 'div' );
+                    code.classList.add( 'code' );
+                    
+                    var pre = document.createElement( 'pre' );
+                   
+                    if( num === "1" ){
+                        code.classList.add( 'inline' );
+                        pre.classList.add( 'inline' );
+                    } else {
+                    //    if( numbers === "false" ){ //numbers isn't global??
+                            var numbers = document.createElement( 'div' );
+                            numbers.classList.add( 'numbers' );
+                            numbers.innerHTML = num;
+                            code.appendChild( numbers );     
+                   //     }
+                    }
+                    pre.classList.add( 'text' );
+                    pre.innerText = codeHold;
+                    hljs.highlightBlock( pre );
+                    code.appendChild( pre );
+                    em.appendChild( code );
+                    codeHold = '';
                 }
-                pre.classList.add( 'text' );
-                pre.innerText = codeHold;
-                hljs.highlightBlock( pre );
-                code.appendChild( pre );
-                em.appendChild( code );
                 state = 0;
-                codeHold = '';
             } else {
                 codeHold += words[i];   
             }
         }
     }
+    var p = document.createElement( 'p' );
+    p.classList.add('inline');
+    p.innerText = textHold + codeHold; //should we leave the extra del if codeHold !== '' ???
+    em.appendChild(p);
 }
