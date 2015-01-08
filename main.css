@@ -1,7 +1,3 @@
-.block_container {
-    display: inline;
-    white-space: nowrap;
-}
 
 .code {
     font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
@@ -12,16 +8,19 @@
     box-sizing: border-box;
 
     border-radius: .3em;
-    overflow-x: auto;
     text-shadow: none;
+
 }
 
 /* .code > p */
 .text {
     padding-left: .5em;
-    width: 87%;
+    width: 85%;
     display: inline-block;
     vertical-align: top;
+        overflow-x: auto;
+
+    white-space: nowrap;
 }
 
 /* .code > div */
@@ -57,7 +56,6 @@ p.inline {
 }
 
 pre {
-    width: inherit !important;
     margin: 0;
     padding: 0;
     display: inline-block;

@@ -3,18 +3,6 @@
  * @author Tyler Chen, Jesse Mu
  */
 
-function nBuild(nt) {
-    if( numbers === "true" ){ 
-        return true 
-    } else {
-        n = "";
-        for (m = 0; m < nt.split('<br/>').length; m++) {
-            n += "<br/>" + (m + 1);
-        }
-        return n.substring(5, n.length);
-    }
-}
-
 var del;
 var rev;
 var numbers;
@@ -30,86 +18,78 @@ function getVars(){
     numbers = vars.numbers;
 }
 
-function draw(em) {
-    html = em.innerText;
-    
-    var stop_index = html.lastIndexOf(rev);
-    var start_index = html.indexOf(del);
-
-    if (stop_index > start_index && start_index > -1) {
-        // console.log("inside");
-        em.innerHTML = write(html);
-        var code = em.getElementsByTagName( "pre" );
-        for(var i=0; i<code.length; i++){
-            // console.log( code[i] );
-            //code[i].innerText = code[i].innerHTML.replace(/(<br>)/g, "\n");
-            hljs.highlightBlock( code[i] );
-        }
+function nBuild(nt) {
+    n = "";
+    for (m = 0; m < nt.split('<br/>').length; m++) {
+        n += "<br/>" + (m + 1);
     }
+    return n.substring(5, n.length);
 }
-/**
-WRITE function should take an element and do stuff to it rather than string things. 
-Strings mean if you write stuff that looks like HTML it will be interpreted as HTML 
 
-*/
-//write: string -> string
-//takes innterHTML of parent element of %p tag(s) and formats to code style blocks 
-//http://jsfiddle.net/m9eLk17a/1/  
-function write(t){
-    console.log( t ) ;
-    
-    //.replace(del+"\n", del).replace("\n" + rev, rev)
-    var text = t.replace(/\n/g, "<br/>"); 
-      
-    console.log( text );
-    var regexExpression = "("+del+"|"+rev+"|<br/>)";
-    var regex = new RegExp(regexExpression, "g");
-    var newtext = "";
-    var text_hold = "";
-    var code_hold = "";
-    var state = 0; //1: after code start delimiter but before stop
-    var words = text.split( regex ).filter(function(a){ return a !== ""; }); 
-    console.log( words );
-    for(i = 0; i < words.length; i++){
-        if( state === 0){
-            if( words[i] === del){
-                newtext += "<p class='inline'>" + text_hold + "</p>";
+function draw(em){
+    var text = em.innerText.replace(/\n/g, "<br/>"); 
+    console.log(text);
+    var regex = new RegExp("("+del+"|"+rev+"|<br/>)", "g");
+    var words = text.split( regex ); //may need "" filtered out
+    console.log(words);
+    em.innerHTML = '';
+    var state = 0; //1: in code area
+    var textHold = '';
+    var codeHold = '';
+    for(var i=0; i<words.length; i++){
+        if( state === 0 ){ //outside code
+            if( words[i] === del ){
+                var p = document.createElement( 'p' );
+                p.classList.add('inline');
+                p.innerText = textHold;
+                em.appendChild(p);
+                
                 state = 1;
-                text_hold = "";
-            } else if(words[i] === "<br/>") {
-                newtext += "<p class='inline'>" + text_hold + "</p><br/>";
-                text_hold = "";
+                textHold = '';
+            } else if( words[i] === "<br/>" ){
+                var p = document.createElement( 'p' );
+                p.classList.add('inline');
+                p.innerText = textHold;
+                em.appendChild(p);
+                
+                var br = document.createElement( 'br' );
+                em.appendChild(br);
+                
+                textHold = '';
             } else {
-                text_hold += words[i];
+                textHold += words[i];
             }
-        } else { //state == 1
-            if( words[i] === rev ){
-                num = nBuild( code_hold );
-                console.log(num);
-                if( num === "1"){
-                  newtext += "<div class='code inline'><div>";
-                } else if( num === true) {
-                    newtext += "<div class='code'><div class='block_container'>"
+        } else { //inside code (state === 0)
+            if( words[i] === rev){
+                var num = nBuild( codeHold );
+                var code = document.createElement( 'div' );
+                code.classList.add( 'code' );
+                codeHold = codeHold.replace(/(<br\/>)/g, "\n");
+                if( num === "1" ){
+                    code.classList.add( 'inline' );
                 } else {
-                    newtext += "<div class='code'><div class='block_container'><div class='numbers'>" + nBuild( code_hold ) +"</div>";
+                    var numbers = document.createElement( 'div' );
+                    numbers.classList.add( 'numbers' );
+                    numbers.innerHTML = num;
+                    code.appendChild( numbers );                    
                 }
-                newtext += "<pre class='text'>" + code_hold + "</pre></div></div>";
-                console.log( code_hold );
+                var pre = document.createElement( 'pre' );
+                pre.classList.add( 'text' );
+                pre.innerText = codeHold;
+                hljs.highlightBlock( pre );
+                code.appendChild( pre );
+                em.appendChild( code );
                 state = 0;
-                code_hold = "";
-            } else if(words[i] === "<br/>") {
+                codeHold = '';
+            } else if( words[i] === "<br/>"){
                 if(words[i-1] === del || words[i+1] === rev){
                     console.log('skip');
                 } else {
-                    code_hold += words[i];
-                }                
-            } else{
-                code_hold += words[i];
+                    codeHold += words[i];
+                }
+            } else {
+                codeHold += words[i];   
             }
         }
     }
-    newtext += "<p class='inline'>" + text_hold + code_hold + "</p>";
-    newtext = newtext.replace(/<p class='inline'><\/p>/g, "");
-    console.log( newtext );
-    return newtext;
 }
