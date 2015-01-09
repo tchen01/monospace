@@ -75,8 +75,7 @@
   color: #b294bb;
 }
 
-.hljs ,
-.code {
+.hljs{
   background: #1d1f21;
   color: #c5c8c6;
   -webkit-text-size-adjust: none;

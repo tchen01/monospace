@@ -2,8 +2,7 @@
 Monokai style - ported by Luigi Maselli - http://grigio.org
 */
 
-.hljs  ,
-.code{
+.hljs{
   background: #272822;
   -webkit-text-size-adjust: none;
 }
@@ -21,8 +20,7 @@ Monokai style - ported by Luigi Maselli - http://grigio.org
   color: #f92672;
 }
 
-.hljs ,
-.code {
+.hljs{
   color: #ddd;
 }
 

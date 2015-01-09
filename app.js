@@ -69,7 +69,7 @@ function write(em){
                     var num = nBuild( codeHold );
                     var code = document.createElement( 'div' );
                     code.classList.add( 'code' );
-                    
+                    code.classList.add( 'hljs' );
                     var pre = document.createElement( 'pre' );
                    
                     if( num === "1" ){
@@ -98,6 +98,6 @@ function write(em){
     }
     var p = document.createElement( 'p' );
     p.classList.add('inline');
-    p.innerText = textHold + codeHold; //should we leave the extra del if codeHold !== '' ???
+    p.innerText = (state === 0) ? textHold : del + codeHold;
     em.appendChild(p);
 }
