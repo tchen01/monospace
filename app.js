@@ -19,9 +19,9 @@ function getVars(){
 }
 
 function nBuild(nt) {
-    n = "";
-    for (m = 0; m < nt.split('\n').length; m++) {
-        n += "<br/>" + (m + 1);
+    var n = "";
+    for (var m = 1; m <= nt.split('\n').length; m++) {
+        n += "<br/>" + m;
     }
     return n.substring(5, n.length);
 }
@@ -41,13 +41,14 @@ function draw(em){
 
 //formats snippets of code from element objects
 function write(em){
+    console.log( numbers );
     var regex = new RegExp("("+del+"|"+rev+"|\n)", "g");
     var words = em.innerText.split( regex ).filter(function(a){ return a !== ""; }); 
     em.innerHTML = '';
     var state = 0; 
     var textHold = '';
     var codeHold = '';
-    console.log( words );
+    console.log( words  + del);
     for(var i=0; i<words.length; i++){
         if( state === 0 ){ //outside code
             if( words[i] === del ){
@@ -76,12 +77,12 @@ function write(em){
                         code.classList.add( 'inline' );
                         pre.classList.add( 'inline' );
                     } else {
-                    //    if( numbers === "false" ){ //numbers isn't global??
-                            var numbers = document.createElement( 'div' );
-                            numbers.classList.add( 'numbers' );
-                            numbers.innerHTML = num;
-                            code.appendChild( numbers );     
-                   //     }
+                        if( numbers === "false" ){ // is this the best way to hide numbers?
+                            var nums = document.createElement( 'div' );
+                            nums.classList.add( 'numbers' );
+                            nums.innerHTML = num;
+                            code.appendChild( nums );     
+                        }
                     }
                     pre.classList.add( 'text' );
                     pre.innerText = codeHold;
