@@ -5,13 +5,18 @@
  
 //todo:
 //refresh drawing when del is updated.
-//dynamically build styles in options.html from directory containing styles??
+
+//do we want to use * notation for whitelist? 
+
 var hlStyleElement = document.getElementById('hl-style');
 var delElement = document.getElementById('del-style');
 var revCheck = document.getElementById('rev-check');
 var revElement = document.getElementById('rev-style');
 var numCheck = document.getElementById('num-check');
 var whitelistElement = document.getElementById('whitelist-style');
+var wlInput = document.getElementById('wlinput-style');
+var addButton = document.getElementById('whitelist-add');
+var removeButton = document.getElementById('whitelist-remove');
 
 var style = document.createElement("link");
 style.rel = "stylesheet";
@@ -21,13 +26,17 @@ var monospaceStyles = document.getElementById('monospaceStyles');
 
 function saveOptions() {
     monospaceStyles.href = chrome.extension.getURL("highlight/styles/" + hlStyleElement.value + ".css");
+    whiteList = [];
+    for(var i=0; i<whitelistElement.childElementCount; i++){
+        whiteList.push(whitelistElement.children[i].value);
+    }
     chrome.storage.sync.set({
         hlStyle: hlStyleElement.value,
         del: delElement.value,
         rev: revElement.value,
         revChecked: revCheck.checked,
         numbers: numCheck.checked, //false if visible
-        whitelist: ["facebook.com", "*.js", "*.css", "*.py"], //grab from whitelistElement //do we want to use *??
+        whitelist: whiteList, 
     }, function() {
     
         // Update status to let user know options were saved.
@@ -46,6 +55,21 @@ delElement.addEventListener('blur', function(){
     }
 });
 
+addButton.addEventListener('click', function(){
+    var opt = document.createElement('option');
+    opt.value = wlInput.value;
+    opt.innerHTML = wlInput.value;
+    whitelistElement.appendChild(opt);
+    wlInput.value = '';
+    whitelistElement.size += 1;
+});
+
+removeButton.addEventListener('click', function(){
+    whitelistElement.removeChild(whitelistElement.children[whitelistElement.selectedIndex]);
+    whitelistElement.size -= 1;
+});
+
+
 // Restores default options to chrome.storage
 function restoreOptions() {
     chrome.storage.sync.get({
@@ -62,6 +86,7 @@ function restoreOptions() {
         revElement.value = items.rev;
         revCheck.checked = items.revChecked;
         numCheck.checked = items.numbers
+        whitelistElement.innerHTML = '';
         for(var i = 0; i<items.whitelist.length; i++){
             var opt = document.createElement('option');
             opt.value = items.whitelist[i];
@@ -75,12 +100,15 @@ function restoreOptions() {
 }
 
 function restoreDefaults() {
-    hlStyleElement.value = 'default';
-    delElement.value = '```';
-    revElement.value = '```';
-    revCheck.checked = false;
-    numCheck.checked = false;
-    saveOptions();
+    chrome.storage.sync.set({
+        hlStyle: "default",
+        del: "```",
+        rev: "```",
+        revChecked: false,
+        numbers: false, //false if visible
+        whitelist: ["facebook.com", "*.js", "*.css", "*.py"], //grab from whitelistElement //do we want to use *??
+    })
+    restoreOptions();
     
     var status = document.getElementById('restore-status');
     status.classList.add('alerting');
