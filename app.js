@@ -100,5 +100,7 @@ function write(em){
     var p = document.createElement( 'p' );
     p.classList.add('inline');
     p.innerText = (state === 0) ? textHold : del + codeHold;
-    em.appendChild(p);
+    if( p.innerText !== ''){
+        em.appendChild(p);
+    }
 }
