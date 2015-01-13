@@ -3,45 +3,56 @@
  * @author Jesse Mu, Tyler Chen
  */
  
-//check if facebook.com is on the whitelist
-var highlightjs = document.createElement("script");
-highlightjs.src = chrome.extension.getURL("highlight/highlight.pack.js");
-document.head.appendChild(highlightjs);
-
-var script = document.createElement("script");
-script.id = 'appJS';
-script.src = chrome.extension.getURL("app.js");
-document.head.appendChild(script);
-
-var appJS = document.getElementById('appJS');
-
-var facebook = document.createElement("script");
-facebook.src = chrome.extension.getURL("facebook/facebook.js");
-document.head.appendChild(facebook);
-
-if (document.URL.indexOf("messages") !== -1) {
-    var msg = document.createElement("script");
-    msg.id='messageJS'
-    msg.src = chrome.extension.getURL("facebook/message.js");
-    document.head.appendChild(msg);
-}
-
-var style = document.createElement("link");
-style.rel = "stylesheet";
-style.id = "monospaceStyles";
-style.href = chrome.extension.getURL("highlight/styles/dark.css");
-document.head.appendChild(style);
-
-// theme .hljs css needs to be updated for each theme (see dark.css) or overridden in main.css 
-var monospaceStyles = document.getElementById('monospaceStyles');
-
-chrome.storage.onChanged.addListener(function(changes, namespace) {
-    updateVars()
-    for (key in changes) {
-      var storageChange = changes[key];
+chrome.storage.sync.get(function(items){
+    var whiteList = items.whitelist;
+    for(var i=0; i<whiteList.length; i++){
+        if(whiteList[i] === "facebook.com"){
+            inject();
+            break;
+        }
     }
 });
 
+function inject(){
+    var highlightjs = document.createElement("script");
+    highlightjs.src = chrome.extension.getURL("highlight/highlight.pack.js");
+    document.head.appendChild(highlightjs);
+
+    var script = document.createElement("script");
+    script.id = 'appJS';
+    script.src = chrome.extension.getURL("app.js");
+    document.head.appendChild(script);
+
+    var appJS = document.getElementById('appJS');
+
+    var facebook = document.createElement("script");
+    facebook.src = chrome.extension.getURL("facebook/facebook.js");
+    document.head.appendChild(facebook);
+
+    if (document.URL.indexOf("messages") !== -1) {
+        var msg = document.createElement("script");
+        msg.id='messageJS'
+        msg.src = chrome.extension.getURL("facebook/message.js");
+        document.head.appendChild(msg);
+    }
+
+    var style = document.createElement("link");
+    style.rel = "stylesheet";
+    style.id = "monospaceStyles";
+    style.href = chrome.extension.getURL("highlight/styles/dark.css");
+    document.head.appendChild(style);
+
+    // theme .hljs css needs to be updated for each theme (see dark.css) or overridden in main.css 
+    var monospaceStyles = document.getElementById('monospaceStyles');
+
+    chrome.storage.onChanged.addListener(function(changes, namespace) {
+        updateVars()
+        for (key in changes) {
+          var storageChange = changes[key];
+        }
+    });
+    updateVars();
+}
 function updateVars(){
     chrome.storage.sync.get(function(e){
         var vars = '';
@@ -59,7 +70,6 @@ function updateVars(){
     });
 }
 
-updateVars();
 
 
 
