@@ -5,7 +5,9 @@
  
 //todo:
 //refresh drawing when del is updated.
-//dynamically build styles in options.html from directory containing styles??
+
+//do we want to use * notation for whitelist? 
+
 var hlStyleElement = document.getElementById('hl-style');
 var delElement = document.getElementById('del-style');
 var revCheck = document.getElementById('rev-check');
@@ -34,7 +36,7 @@ function saveOptions() {
         rev: revElement.value,
         revChecked: revCheck.checked,
         numbers: numCheck.checked, //false if visible
-        whitelist: whiteList, //grab from whitelistElement //do we want to use *??
+        whitelist: whiteList, 
     }, function() {
     
         // Update status to let user know options were saved.
@@ -58,6 +60,7 @@ addButton.addEventListener('click', function(){
     opt.value = wlInput.value;
     opt.innerHTML = wlInput.value;
     whitelistElement.appendChild(opt);
+    wlInput.value = '';
     whitelistElement.size += 1;
 });
 
@@ -83,6 +86,7 @@ function restoreOptions() {
         revElement.value = items.rev;
         revCheck.checked = items.revChecked;
         numCheck.checked = items.numbers
+        whitelistElement.innerHTML = '';
         for(var i = 0; i<items.whitelist.length; i++){
             var opt = document.createElement('option');
             opt.value = items.whitelist[i];
