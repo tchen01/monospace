@@ -43,7 +43,7 @@ function draw(em){
 function write(em){
     console.log( numbers );
     var regex = new RegExp("("+del+"|"+rev+"|\n)", "g");
-    var words = em.innerText.split( regex ).filter(function(a){ return a !== ""; }); 
+    var words = em.innerText.replace(/\n{2,}/g, "\n\n").split( regex ).filter(function(a){ return a !== ""; }); 
     em.innerHTML = '';
     var state = 0; 
     var textHold = '';
