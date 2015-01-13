@@ -2,7 +2,8 @@
  * background script for app.js code injection
  * @author Jesse Mu, Tyler Chen
  */
-
+ 
+//check if facebook.com is on the whitelist
 var highlightjs = document.createElement("script");
 highlightjs.src = chrome.extension.getURL("highlight/highlight.pack.js");
 document.head.appendChild(highlightjs);

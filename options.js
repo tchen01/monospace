@@ -11,6 +11,7 @@ var delElement = document.getElementById('del-style');
 var revCheck = document.getElementById('rev-check');
 var revElement = document.getElementById('rev-style');
 var numCheck = document.getElementById('num-check');
+var whitelistElement = document.getElementById('whitelist-style');
 
 var style = document.createElement("link");
 style.rel = "stylesheet";
@@ -26,6 +27,7 @@ function saveOptions() {
         rev: revElement.value,
         revChecked: revCheck.checked,
         numbers: numCheck.checked, //false if visible
+        whitelist: ["facebook.com", "*.js", "*.css", "*.py"], //grab from whitelistElement //do we want to use *??
     }, function() {
     
         // Update status to let user know options were saved.
@@ -53,14 +55,22 @@ function restoreOptions() {
         rev: '```',
         revChecked: false,
         numbers: false,
+        whitelist: ["facebook.com", "*.js", "*.css", "*.py"],
     }, function(items) {
         hlStyleElement.value = items.hlStyle;
         delElement.value = items.del;
         revElement.value = items.rev;
         revCheck.checked = items.revChecked;
         numCheck.checked = items.numbers
+        for(var i = 0; i<items.whitelist.length; i++){
+            var opt = document.createElement('option');
+            opt.value = items.whitelist[i];
+            opt.innerHTML = items.whitelist[i];
+            whitelistElement.appendChild(opt);
+        }
+        whitelistElement.size = Math.min(8,items.whitelist.length);
         monospaceStyles.href = chrome.extension.getURL("highlight/styles/" + items.hlStyle + ".css");
-
+        
     });
 }
 
