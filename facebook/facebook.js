@@ -28,7 +28,7 @@ function SMmonospaceListen() {
                   // console.log( cfx );
                   for(c=0; c<cfx.length; c++){
                     // console.log( cfx[c].firstChild.firstChild );
-                    // cfx[c].firstChild.firstChild.innerText = cfx[c].firstChild.firstChild.innerText.replace(/\n{2,}/g, "\n\n"); too slow??
+                    cfx[c].firstChild.firstChild.innerText = cfx[c].firstChild.firstChild.innerText.replace(/\n{2,}/g, "\n\n");
                     draw(cfx[c].firstChild.firstChild);
                   }
                 }
