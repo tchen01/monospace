@@ -30,10 +30,7 @@ function inject(){
     document.head.appendChild(facebook);
 
     if (document.URL.indexOf("messages") !== -1) {
-        var msg = document.createElement("script");
-        msg.id='messageJS'
-        msg.src = chrome.extension.getURL("facebook/message.js");
-        document.head.appendChild(msg);
+        messageInject();
     }
 
     var style = document.createElement("link");
@@ -53,6 +50,14 @@ function inject(){
     });
     updateVars();
 }
+
+function messageInject(){
+    var msg = document.createElement("script");
+    msg.id='messageJS'
+    msg.src = chrome.extension.getURL("facebook/message.js");
+    document.head.appendChild(msg);
+}
+    
 function updateVars(){
     chrome.storage.sync.get(function(e){
         var vars = '';
