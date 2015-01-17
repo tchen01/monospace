@@ -13,7 +13,7 @@
   </section>
 
   <section id="hl-style-container">
-    <label for="hl-style">Syntax Highlight Style</label><br>
+    <label for="hl-style">Syntax Highlight Style: </label>
     <select id="hl-style">
       <option value="default">Default</option>
       <option value="github">GitHub</option>
@@ -28,20 +28,20 @@
 
   
   <section id="del-style-container">
-    <label for="del-style">Start Delimiter Style</label><br>
+    <label for="del-style">Start Delimiter Style: </label>
     <input id="del-style" type="text"></input>
   </section>
 
   <section id="rev-style-container">
-    <input id="rev-check" type="checkbox"></input>
-    <label for="rev-style">Custom End Delimiter</label><br>
-    <label for="rev-style">End Delimiter Style</label><br>
+    <input id="rev-check" type="checkbox" ></input>
+    <label for="rev-check" >Custom End Delimiter</label><br>
+    <label id="rev-style-text" for="rev-style" >End Delimiter Style: </label>
     <input id="rev-style" type="text"></input>
   </section>
   
   <section id="num-style-container">
     <input id="num-check" type="checkbox"></input>
-    <label for="num-style">Hide Numbers</label><br>
+    <label for="num-check">Hide Numbers</label><br>
   </section>
   <!-- set .numbers style="display: hidden;" -->
   
@@ -58,8 +58,8 @@
   
   <section id="save-container">
     <button id="save">Save</button>
-    <aside id="save-status">Options saved.</aside><br>
     <button id="restore">Restore defaults</button>
+    <aside id="save-status">Options saved.</aside>
     <aside id="restore-status">Restored.</aside>
   </section>
 
