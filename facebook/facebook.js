@@ -3,10 +3,10 @@
  * @author Tyler Chen, Jesse Mu
  */
 
-var observerConfig = {
+var SMobserverConfig = {
     childList: true,
-    subtree: true,
-    characterData: false,
+    subtree: true, 
+    characterData: false, 
     attributes: false
 };
 
@@ -36,7 +36,7 @@ function SMmonospaceListen() {
             }
         }
     });
-    SMmonospaceObserver.observe(document.getElementById('ChatTabsPagelet'), observerConfig);
+    SMmonospaceObserver.observe(document.getElementById('ChatTabsPagelet'), SMobserverConfig);
 }
 
 
