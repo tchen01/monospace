@@ -26,12 +26,11 @@ function inject(){
     var appJS = document.getElementById('appJS');
 
     var facebook = document.createElement("script");
+    facebook.id = 'facebookJS';
     facebook.src = chrome.extension.getURL("facebook/facebook.js");
     document.head.appendChild(facebook);
-
-    if (document.URL.indexOf("messages") !== -1) {
-        messageInject();
-    }
+    
+    scriptInject();
 
     var style = document.createElement("link");
     style.rel = "stylesheet";
@@ -39,7 +38,6 @@ function inject(){
     style.href = chrome.extension.getURL("highlight/styles/dark.css");
     document.head.appendChild(style);
 
-    // theme .hljs css needs to be updated for each theme (see dark.css) or overridden in main.css 
     var monospaceStyles = document.getElementById('monospaceStyles');
 
     chrome.storage.onChanged.addListener(function(changes, namespace) {
@@ -51,13 +49,25 @@ function inject(){
     updateVars();
 }
 
-function messageInject(){
-    var msg = document.createElement("script");
-    msg.id='messageJS'
-    msg.src = chrome.extension.getURL("facebook/message.js");
-    document.head.appendChild(msg);
-}
+//need to run this once history API changes to message page.
+function scriptInject(){
+    // if(document.getElementById('facebookJS') !== null){
+        // document.getElementById('facebookJS').remove();
+    // }
+    if(document.getElementById('messageJS') !== null){
+        document.getElementById('messageJS').remove();
+    }
+
     
+    if (document.URL.indexOf("messages") !== -1) {
+        var msg = document.createElement("script");
+        msg.id='messageJS'
+        msg.src = chrome.extension.getURL("facebook/message.js");
+        document.head.appendChild(msg);
+    }
+}
+
+
 function updateVars(){
     chrome.storage.sync.get(function(e){
         var vars = '';
@@ -75,7 +85,16 @@ function updateVars(){
     });
 }
 
+var observer = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    console.log(mutation.type);
+    if(mutation.type === "attributes"){
+        console.log('switch page');
+        scriptInject();
+    }
+  });    
+});
 
+var config = { attributes: true, childList: true, characterData: true };
 
-
-
+observer.observe(document.body, config);

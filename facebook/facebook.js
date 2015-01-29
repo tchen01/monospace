@@ -12,8 +12,9 @@ var SMobserverConfig = {
 
 getVars();
 
+// UPDATE TO MATCH FORMAT OF MESSAGE.JS
+
 //draws on code blocks when large chat is updated
-//should only be used on https://www.facebook.com/messages
 function SMmonospaceListen() {
     var SMmonospaceObserver = new MutationObserver(function(ms) {
         // console.log(ms);
@@ -39,12 +40,39 @@ function SMmonospaceListen() {
     SMmonospaceObserver.observe(document.getElementById('ChatTabsPagelet'), SMobserverConfig);
 }
 
+// function SMmonospaceListen() {
+    // var SMmonospaceObserver = new MutationObserver(function(ms) {
+        // ms.forEach(function(m) {
+            // if (m.addedNodes.length > 0) { //do we even need this part?
+                // console.log(m.addedNodes);
+                // for(l=0; l<m.addedNodes.length; l++){
+                    // var cfx = m.addedNodes[l].getElementsByClassName( "_5wdf" );
+                    // for(c=0; c<cfx.length; c++){
+                        // cfx[c].firstChild.firstChild.innerText = cfx[c].firstChild.firstChild.innerText.replace(/\n{2,}/g, "\n\n");
+                        // draw(cfx[c].firstChild.firstChild);
+                      // //%div._38 -> %span -> %p
+                    // }
+                // }
+            // }
+        // });
+    // });
+    // SMmonospaceObserver.observe(document.getElementById('ChatTabsPagelet'), SMobserverConfig);
+// }
+
+function SMcode(){
+    var cfx = document.getElementsByClassName( "_5wdf" );
+    for(c=0; c<cfx.length; c++){
+        cfx[c].firstChild.firstChild.innerText = cfx[c].firstChild.firstChild.innerText.replace(/\n{2,}/g, "\n\n");
+        draw(cfx[c].firstChild.firstChild);
+    }
+}
 
 var SMcheckForMsg = setInterval(function() {
     var SMmsgWindow = document.getElementById('ChatTabsPagelet');
     if (SMmsgWindow !== null) {
         console.log('found!');
-        SMmonospaceListen(SMmsgWindow, observerConfig);
+        SMcode();
+        SMmonospaceListen(SMmsgWindow, SMobserverConfig);
         clearInterval(SMcheckForMsg);
     }
 }, 50);

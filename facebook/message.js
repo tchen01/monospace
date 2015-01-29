@@ -2,7 +2,6 @@
  * Observe DOM mutations and convert monospace code blocks
  * @author Tyler Chen, Jesse Mu
  */
-var msgWindow = document.getElementById('webMessengerRecentMessages');
 var observerConfig = {
     childList: true,
     subtree: false, 
@@ -27,10 +26,10 @@ function monospaceListen() {
             }
         });
     });
-    monospaceObserver.observe(msgWindow, observerConfig);
+    monospaceObserver.observe(document.getElementById('webMessengerRecentMessages'), observerConfig);
 }
 function code(){ //I think my function names make no sense
-    var cfx = msgWindow.getElementsByClassName( "_38" );
+    var cfx = document.getElementById('webMessengerRecentMessages').getElementsByClassName( "_38" );
     for(c=0; c<cfx.length; c++){
         cfx[c].firstChild.innerHTML = cfx[c].firstChild.innerHTML.replace(/(<\/p><p>)/g, "\n\n");
         draw(cfx[c].firstChild);
@@ -38,7 +37,8 @@ function code(){ //I think my function names make no sense
 }
 
 var checkForMsg = setInterval(function() {
-    console.log('search');
+    var msgWindow = document.getElementById('webMessengerRecentMessages');
+    console.log('seach');
     if (msgWindow !== null) {
         console.log('found!');
         code();
