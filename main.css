@@ -20,6 +20,16 @@
     vertical-align: top;
     overflow-x: auto;
     word-wrap: normal;
+    
+}
+::-webkit-scrollbar {
+    height: 12px;
+    width: 12px;
+    background: rgba(230,230,230,.3);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(30,30,30,.3);
 }
 
 /* .code > div */

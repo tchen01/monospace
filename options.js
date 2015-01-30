@@ -12,6 +12,7 @@ var hlStyleElement = document.getElementById('hl-style');
 var delElement = document.getElementById('del-style');
 var revCheck = document.getElementById('rev-check');
 var revElement = document.getElementById('rev-style');
+var revText = document.getElementById('rev-style-text');
 var numCheck = document.getElementById('num-check');
 var whitelistElement = document.getElementById('whitelist-style');
 var wlInput = document.getElementById('wlinput-style');
@@ -55,6 +56,19 @@ delElement.addEventListener('blur', function(){
     }
 });
 
+revCheck.addEventListener('change', showRev);
+function showRev(){
+    console.log( revCheck.checked );
+    if( revCheck.checked === true ){
+        revElement.style.display = "inline";
+        revText.style.display = "inline";
+    } else {
+        revElement.style.display = "none";
+        revText.style.display = "none";
+        revElement.value = delElement.value.split('').reverse().join('');
+    }
+}
+
 addButton.addEventListener('click', function(){
     var opt = document.createElement('option');
     opt.value = wlInput.value;
@@ -85,6 +99,7 @@ function restoreOptions() {
         delElement.value = items.del;
         revElement.value = items.rev;
         revCheck.checked = items.revChecked;
+        showRev();
         numCheck.checked = items.numbers
         whitelistElement.innerHTML = '';
         for(var i = 0; i<items.whitelist.length; i++){

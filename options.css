@@ -12,15 +12,15 @@ body {
 }
 
 #section-container{
-    margin: 5% 35% 0 35%; /* why does top margin push down body?*/
-    width: 30%;
+    margin: 5% 33% 0 33%; /* why does top margin push down body?*/
+    width: 34%;
 }
 
 section {
     display: table;
     vertical-align: middle;
     width: 100%; 
-    padding: 1.5em 20% 1.5em 25%;
+    padding: 1.5em 10% 1.5em 15%;
     box-sizing: border-box;
 }
 
@@ -36,7 +36,12 @@ section:nth-child(even) {
 h1 {
     font-size: 2.25em;
 }
-input, select{
+
+input{
+    width: 15%;
+}
+
+select{
     width: 35%;
 }
 
@@ -53,16 +58,16 @@ label, aside{
 aside {
     transition: opacity 0.5s;
     opacity: 0;
+    display: none;
 }
 
 aside.alerting {
     opacity: 1;
+    display: inline;
 }
 
 
 select, button {
     font-size: 1.25em;
     font-family: inherit;
-    margin-right: 1em;
-    margin-bottom: 1em;
 }
