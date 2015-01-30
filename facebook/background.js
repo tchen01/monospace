@@ -8,6 +8,19 @@ chrome.storage.sync.get(function(items){
     for(var i=0; i<whiteList.length; i++){
         if(whiteList[i] === "facebook.com"){
             inject();
+            var observer = new MutationObserver(function(mutations) {
+              mutations.forEach(function(mutation) {
+                console.log(mutation.type);
+                if(mutation.type === "attributes"){
+                    console.log('switch page');
+                    scriptInject();
+                }
+              });    
+            });
+
+            var config = { attributes: true, childList: true, characterData: true };
+
+            observer.observe(document.body, config);
             break;
         }
     }
@@ -85,16 +98,4 @@ function updateVars(){
     });
 }
 
-var observer = new MutationObserver(function(mutations) {
-  mutations.forEach(function(mutation) {
-    console.log(mutation.type);
-    if(mutation.type === "attributes"){
-        console.log('switch page');
-        scriptInject();
-    }
-  });    
-});
 
-var config = { attributes: true, childList: true, characterData: true };
-
-observer.observe(document.body, config);
