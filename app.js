@@ -27,8 +27,9 @@ function nBuild(nt) {
 }
 
 //checks if element object contains code snippets
+//swtich b
 function draw(em){
-    var text = em.innerText;
+    var text = em.innerHTML;
     
     var stopIndex = text.lastIndexOf(rev);
     var startIndex = text.indexOf(del);
@@ -41,9 +42,10 @@ function draw(em){
 
 //formats snippets of code from element objects
 function write(em){
+    em.classList.add('monospaced');
     console.log( numbers );
     var regex = new RegExp("("+del+"|"+rev+"|\n)", "g");
-    var words = em.innerText.split( regex ).filter(function(a){ return a !== ""; }); 
+    var words = em.innerHTML.split( regex ).filter(function(a){ return a !== ""; }); 
     em.innerHTML = '';
     var state = 0; 
     var textHold = '';
@@ -52,10 +54,10 @@ function write(em){
     for(var i=0; i<words.length; i++){
         if( state === 0 ){ //outside code
             if( words[i] === del ){
-                if( textHold !== '' ){
+                if( textHold !== '  ' ){
                     var p = document.createElement( 'p' );
                     p.classList.add('inline');
-                    p.innerText = textHold; 
+                    p.innerHTML = textHold; 
                     em.appendChild(p);
                     textHold = '';
                 }
@@ -85,7 +87,7 @@ function write(em){
                         }
                     }
                     pre.classList.add( 'text' );
-                    pre.innerText = codeHold;
+                    pre.innerHTML = codeHold;
                     hljs.highlightBlock( pre );
                     code.appendChild( pre );
                     em.appendChild( code );
@@ -99,8 +101,8 @@ function write(em){
     }
     var p = document.createElement( 'p' );
     p.classList.add('inline');
-    p.innerText = (state === 0) ? textHold : del + codeHold;
-    if( p.innerText !== ''){
+    p.innerHTML = (state === 0) ? textHold : del + codeHold;
+    if( p.innerHTML !== ''){
         em.appendChild(p);
     }
 }

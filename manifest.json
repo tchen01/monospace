@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
-    "name": "monospace",
-    "version": "0",
-    "description": "A plain text description",
+    "name": "Monospace",
+    "version": "0.1.0",
+    "description": "Display monospaced and highlighted code blocks instantly in Chrome!",
     "options_page": "options.html",
     "permissions": [
         "storage"
