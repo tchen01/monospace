@@ -1,9 +1,9 @@
-if( document.body.childElementCount === 1){ //check if on chrome's file display page
-    chrome.storage.sync.get(function(items){
+if (document.body.childElementCount === 1) { //check if on chrome's file display page
+    chrome.storage.sync.get(function(items) {
         var whiteList = items.whitelist;
         var url = document.URL;
-        for(var i=0; i<whiteList.length; i++){
-            if(url.indexOf(whiteList[i].replace("*","")) > -1){
+        for (var i = 0; i < whiteList.length; i++) {
+            if (url.indexOf(whiteList[i].replace("*", "")) > -1) {
                 highlight();
                 break;
             }
@@ -11,7 +11,7 @@ if( document.body.childElementCount === 1){ //check if on chrome's file display 
     });
 }
 
-function highlight(){
+function highlight() {
     var style = document.createElement("link");
     style.rel = "stylesheet";
     style.id = "monospaceStyles";
@@ -19,14 +19,14 @@ function highlight(){
     document.head.appendChild(style);
     var monospaceStyles = document.getElementById('monospaceStyles');
 
-    function updateStyles(){
-        chrome.storage.sync.get(function(e){
+    function updateStyles() {
+        chrome.storage.sync.get(function(e) {
             monospaceStyles.href = chrome.extension.getURL("highlight/styles/" + e.hlStyle + ".css");
 
-            if( e.numbers === true ){
-            num.style.display = "none";
+            if (e.numbers === true) {
+                num.style.display = "none";
             } else {
-            num.style.display = "inline-block";
+                num.style.display = "inline-block";
             }
         });
     }
@@ -39,14 +39,14 @@ function highlight(){
 
     document.body.classList.add("hljs");
 
-    pre = document.getElementsByTagName( 'pre' )[0];
+    pre = document.getElementsByTagName('pre')[0];
     text = pre.innerText.substring(0, pre.innerText.length - 1);
 
-    document.body.innerHTML = "<div class='code' style='font-size:12pt; line-height: 1em;'><div class='numbers'>" + nBuild( text ) +"</div><pre style='padding-left: 0.5em;width: 95%;overflow-x: scroll; overflow-y: hidden;'></pre></div>"
+    document.body.innerHTML = "<div class='code' style='font-size:12pt; line-height: 1em;'><div class='numbers'>" + nBuild(text) + "</div><pre style='padding-left: 0.5em;width: 95%;overflow-x: scroll; overflow-y: hidden;'></pre></div>"
     //update this to a better method?
 
-    num = document.getElementsByClassName( 'numbers' )[0];
-    pre = document.getElementsByTagName( 'pre' )[0];
+    num = document.getElementsByClassName('numbers')[0];
+    pre = document.getElementsByTagName('pre')[0];
     pre.innerText = text;
-    hljs.highlightBlock( pre );
+    hljs.highlightBlock(pre);
 }
