@@ -8,12 +8,12 @@ var rev;
 var numbers;
 
 //only works if #appJS exists (defined from a content-script)
-function getVars(){
+function getVars() {
     var monospace = document.getElementById('appJS');
     var obj = monospace.getAttribute('data-vars');
     var obj = obj.substring(0, obj.length - 1);
     var vars = JSON.parse("{" + obj + "}");
-    del  = vars.del;
+    del = vars.del;
     rev = vars.rev;
     numbers = vars.numbers;
 }
@@ -27,79 +27,81 @@ function nBuild(nt) {
 }
 
 //checks if element object contains code snippets
-function draw(em){
+function draw(em) {
     var text = em.innerHTML;
-    
+
     var stopIndex = text.lastIndexOf(rev);
     var startIndex = text.indexOf(del);
 
     if (stopIndex > startIndex && startIndex > -1) {
         write(em);
     }
-    
+
 }
 
 //formats snippets of code from element objects
-function write(em){
+function write(em) {
     em.classList.add('monospaced');
-    console.log( numbers );
-    var regex = new RegExp("("+del+"|"+rev+"|\n)", "g");
-    var words = em.innerHTML.split( regex ).filter(function(a){ return a !== ""; }); 
+    console.log(numbers);
+    var regex = new RegExp("(" + del + "|" + rev + "|\n)", "g");
+    var words = em.innerHTML.split(regex).filter(function(a) {
+        return a !== "";
+    });
     em.innerHTML = '';
-    var state = 0; 
+    var state = 0;
     var textHold = '';
     var codeHold = '';
-    console.log( words  + del);
-    for(var i=0; i<words.length; i++){
-        if( state === 0 ){ //outside code
-            if( words[i] === del ){
-                if( textHold !== '  ' ){
-                    var p = document.createElement( 'p' );
+    console.log(words + del);
+    for (var i = 0; i < words.length; i++) {
+        if (state === 0) { //outside code
+            if (words[i] === del) {
+                if (textHold !== '  ') {
+                    var p = document.createElement('p');
                     p.classList.add('inline');
-                    p.innerHTML = textHold; 
-                    if(p.innerText !== '') em.appendChild(p); 
+                    p.innerHTML = textHold;
+                    if (p.innerText !== '') em.appendChild(p);
                     textHold = '';
                 }
-                state = 1;        
+                state = 1;
             } else {
                 textHold += words[i];
             }
         } else { //inside code (state === 0)
-            if( words[i] === rev){
-                if( codeHold !== '' ){
+            if (words[i] === rev) {
+                if (codeHold !== '') {
 
-                    var num = nBuild( codeHold );
-                    var code = document.createElement( 'div' );
-                    code.classList.add( 'code' );
-                    code.classList.add( 'hljs' );
-                    var pre = document.createElement( 'pre' );
-                   
-                    if( num === "1" ){
-                        code.classList.add( 'inline' );
-                        pre.classList.add( 'inline' );
+                    var num = nBuild(codeHold);
+                    var code = document.createElement('div');
+                    code.classList.add('code');
+                    code.classList.add('hljs');
+                    var pre = document.createElement('pre');
+
+                    if (num === "1") {
+                        code.classList.add('inline');
+                        pre.classList.add('inline');
                     } else {
-                        if( numbers === "false" ){ // is this the best way to hide numbers?
-                            var nums = document.createElement( 'div' );
-                            nums.classList.add( 'numbers' );
+                        if (numbers === "false") { // is this the best way to hide numbers?
+                            var nums = document.createElement('div');
+                            nums.classList.add('numbers');
                             nums.innerHTML = num;
-                            code.appendChild( nums );     
+                            code.appendChild(nums);
                         }
                     }
-                    pre.classList.add( 'text' );
+                    pre.classList.add('text');
                     pre.innerHTML = codeHold;
-                    hljs.highlightBlock( pre );
-                    code.appendChild( pre );
-                    em.appendChild( code );
+                    hljs.highlightBlock(pre);
+                    code.appendChild(pre);
+                    em.appendChild(code);
                     codeHold = '';
                 }
                 state = 0;
             } else {
-                codeHold += words[i];   
+                codeHold += words[i];
             }
         }
     }
-    var p = document.createElement( 'p' );
+    var p = document.createElement('p');
     p.classList.add('inline');
     p.innerHTML = (state === 0) ? textHold : del + codeHold;
-    if( p.innerText !== '') em.appendChild(p);
+    if (p.innerText !== '') em.appendChild(p);
 }

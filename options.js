@@ -1,8 +1,8 @@
 /**
- * Saves options to chrome.storage 
+ * Saves options to chrome.storage
  * @author Tyler Chen, Jesse Mu
  */
- 
+
 //todo:
 //refresh drawing when del is updated.
 
@@ -28,7 +28,7 @@ var monospaceStyles = document.getElementById('monospaceStyles');
 function saveOptions() {
     monospaceStyles.href = chrome.extension.getURL("highlight/styles/" + hlStyleElement.value + ".css");
     whiteList = [];
-    for(var i=0; i<whitelistElement.childElementCount; i++){
+    for (var i = 0; i < whitelistElement.childElementCount; i++) {
         whiteList.push(whitelistElement.children[i].value);
     }
     chrome.storage.sync.set({
@@ -37,9 +37,9 @@ function saveOptions() {
         rev: revElement.value,
         revChecked: revCheck.checked,
         numbers: numCheck.checked, //false if visible
-        whitelist: whiteList, 
+        whitelist: whiteList,
     }, function() {
-    
+
         // Update status to let user know options were saved.
         var status = document.getElementById('save-status');
         status.textContent = 'Options saved.';
@@ -50,16 +50,17 @@ function saveOptions() {
     });
 }
 
-delElement.addEventListener('blur', function(){
-    if( !revCheck.checked ){
+delElement.addEventListener('blur', function() {
+    if (!revCheck.checked) {
         revElement.value = delElement.value.split('').reverse().join('');
     }
 });
 
 revCheck.addEventListener('change', showRev);
-function showRev(){
-    console.log( revCheck.checked );
-    if( revCheck.checked === true ){
+
+function showRev() {
+    console.log(revCheck.checked);
+    if (revCheck.checked === true) {
         revElement.style.display = "inline";
         revText.style.display = "inline";
     } else {
@@ -69,7 +70,7 @@ function showRev(){
     }
 }
 
-addButton.addEventListener('click', function(){
+addButton.addEventListener('click', function() {
     var opt = document.createElement('option');
     opt.value = wlInput.value;
     opt.innerHTML = wlInput.value;
@@ -78,7 +79,7 @@ addButton.addEventListener('click', function(){
     whitelistElement.size += 1;
 });
 
-removeButton.addEventListener('click', function(){
+removeButton.addEventListener('click', function() {
     whitelistElement.removeChild(whitelistElement.children[whitelistElement.selectedIndex]);
     whitelistElement.size -= 1;
 });
@@ -102,15 +103,15 @@ function restoreOptions() {
         showRev();
         numCheck.checked = items.numbers
         whitelistElement.innerHTML = '';
-        for(var i = 0; i<items.whitelist.length; i++){
+        for (var i = 0; i < items.whitelist.length; i++) {
             var opt = document.createElement('option');
             opt.value = items.whitelist[i];
             opt.innerHTML = items.whitelist[i];
             whitelistElement.appendChild(opt);
         }
-        whitelistElement.size = Math.min(8,items.whitelist.length);
+        whitelistElement.size = Math.min(8, items.whitelist.length);
         monospaceStyles.href = chrome.extension.getURL("highlight/styles/" + items.hlStyle + ".css");
-        
+
     });
 }
 
@@ -124,7 +125,7 @@ function restoreDefaults() {
         whitelist: ["facebook.com", "*.js", "*.css", "*.py"], //grab from whitelistElement //do we want to use *??
     })
     restoreOptions();
-    
+
     var status = document.getElementById('restore-status');
     status.classList.add('alerting');
     setTimeout(function() {
