@@ -20,14 +20,13 @@ function getVars(){
 
 function nBuild(nt) {
     var n = "";
-    for (var m = 1; m <= nt.split('\n').length; m++) {
+    for (var m = 1; m <= nt.split(/\n|<br>/g).length; m++) {
         n += "<br/>" + m;
     }
     return n.substring(5, n.length);
 }
 
 //checks if element object contains code snippets
-//swtich b
 function draw(em){
     var text = em.innerHTML;
     
@@ -58,7 +57,7 @@ function write(em){
                     var p = document.createElement( 'p' );
                     p.classList.add('inline');
                     p.innerHTML = textHold; 
-                    em.appendChild(p);
+                    if(p.innerText !== '') em.appendChild(p); 
                     textHold = '';
                 }
                 state = 1;        
@@ -102,7 +101,5 @@ function write(em){
     var p = document.createElement( 'p' );
     p.classList.add('inline');
     p.innerHTML = (state === 0) ? textHold : del + codeHold;
-    if( p.innerHTML !== ''){
-        em.appendChild(p);
-    }
+    if( p.innerText !== '') em.appendChild(p);
 }

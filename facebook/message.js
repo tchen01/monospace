@@ -29,7 +29,7 @@ function monospaceListen() {
     });
     monospaceObserver.observe(document.getElementById('webMessengerRecentMessages'), observerConfig);
 }
-function code(){ //I think my function names make no sense
+function initialDraw(){ //I think my function names make no sense
     var cfx = document.getElementById('webMessengerRecentMessages').getElementsByClassName( "_38" );
     for(c=0; c<cfx.length; c++){
         cfx[c].firstChild.innerHTML = cfx[c].firstChild.innerHTML.replace(/(<\/p><p>)/g, "\n\n");
@@ -42,7 +42,7 @@ var checkForMsg = setInterval(function() {
     console.log('seach');
     if (msgWindow !== null) {
         console.log('found!');
-        code();
+        initialDraw();
         monospaceListen(msgWindow, observerConfig);
         clearInterval(checkForMsg);
     }
