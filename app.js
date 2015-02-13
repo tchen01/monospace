@@ -20,7 +20,7 @@ function getVars(){
 
 function nBuild(nt) {
     var n = "";
-    for (var m = 1; m <= nt.split('\n').length; m++) {
+    for (var m = 1; m <= nt.split(/\n|<br>/g).length; m++) {
         n += "<br/>" + m;
     }
     return n.substring(5, n.length);
@@ -28,7 +28,7 @@ function nBuild(nt) {
 
 //checks if element object contains code snippets
 function draw(em){
-    var text = em.innerText;
+    var text = em.innerHTML;
     
     var stopIndex = text.lastIndexOf(rev);
     var startIndex = text.indexOf(del);
@@ -41,9 +41,10 @@ function draw(em){
 
 //formats snippets of code from element objects
 function write(em){
+    em.classList.add('monospaced');
     console.log( numbers );
     var regex = new RegExp("("+del+"|"+rev+"|\n)", "g");
-    var words = em.innerText.split( regex ).filter(function(a){ return a !== ""; }); 
+    var words = em.innerHTML.split( regex ).filter(function(a){ return a !== ""; }); 
     em.innerHTML = '';
     var state = 0; 
     var textHold = '';
@@ -52,11 +53,11 @@ function write(em){
     for(var i=0; i<words.length; i++){
         if( state === 0 ){ //outside code
             if( words[i] === del ){
-                if( textHold !== '' ){
+                if( textHold !== '  ' ){
                     var p = document.createElement( 'p' );
                     p.classList.add('inline');
-                    p.innerText = textHold; 
-                    em.appendChild(p);
+                    p.innerHTML = textHold; 
+                    if(p.innerText !== '') em.appendChild(p); 
                     textHold = '';
                 }
                 state = 1;        
@@ -85,7 +86,7 @@ function write(em){
                         }
                     }
                     pre.classList.add( 'text' );
-                    pre.innerText = codeHold;
+                    pre.innerHTML = codeHold;
                     hljs.highlightBlock( pre );
                     code.appendChild( pre );
                     em.appendChild( code );
@@ -99,8 +100,6 @@ function write(em){
     }
     var p = document.createElement( 'p' );
     p.classList.add('inline');
-    p.innerText = (state === 0) ? textHold : del + codeHold;
-    if( p.innerText !== ''){
-        em.appendChild(p);
-    }
+    p.innerHTML = (state === 0) ? textHold : del + codeHold;
+    if( p.innerText !== '') em.appendChild(p);
 }

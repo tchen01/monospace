@@ -1,6 +1,6 @@
 /**
  * background script for app.js code injection
- * @author Jesse Mu, Tyler Chen
+ * @author Tyler Chen, Jesse Mu
  */
  
 chrome.storage.sync.get(function(items){
@@ -62,11 +62,7 @@ function inject(){
     updateVars();
 }
 
-//need to run this once history API changes to message page.
 function scriptInject(){
-    // if(document.getElementById('facebookJS') !== null){
-        // document.getElementById('facebookJS').remove();
-    // }
     if(document.getElementById('messageJS') !== null){
         document.getElementById('messageJS').remove();
     }
@@ -93,7 +89,7 @@ function updateVars(){
         var obj = obj.substring(0, obj.length - 1);
         var obj = JSON.parse("{" + obj + "}");
         
-        //reinject JS here if del changes?
+        //reinject JS here if settings change?
         monospaceStyles.href = chrome.extension.getURL("highlight/styles/" + obj.hlStyle + ".css");
     });
 }

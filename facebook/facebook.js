@@ -20,8 +20,10 @@ function SMmonospaceListen() {
                 if( m.addedNodes[0].className.indexOf( '_5wd4' ) > -1 ){
                   var cfx = m.addedNodes[0].getElementsByClassName( '_5wdf' );
                   for(c=0; c<cfx.length; c++){
-                    cfx[c].firstChild.firstChild.innerText = cfx[c].firstChild.firstChild.innerText.replace(/\n{2,}/g, "\n\n");
-                    draw(cfx[c].firstChild.firstChild);
+                    // if( cfx[c].firstChild.firstChild.className !== "_5y15 monospaced" ){ //i think this is redundant since messages are not refreshed.
+                        cfx[c].firstChild.firstChild.innerHTML = cfx[c].firstChild.firstChild.innerHTML.replace(/<br(.*?)">/g, "<br>").replace(/(<br>){3,}/g, "<br><br>"); //probably could be reduced to one regex if I were a regex pro
+                        draw(cfx[c].firstChild.firstChild);
+                    // }
                   }
                 }
               }
@@ -32,10 +34,10 @@ function SMmonospaceListen() {
 }
 
 
-function SMcode(){
+function SMinitialDraw(){
     var cfx = document.getElementsByClassName( "_5wdf" );
     for(c=0; c<cfx.length; c++){
-        cfx[c].firstChild.firstChild.innerText = cfx[c].firstChild.firstChild.innerText.replace(/\n{2,}/g, "\n\n");
+        cfx[c].firstChild.firstChild.innerHTML = cfx[c].firstChild.firstChild.innerHTML.replace(/<br(.*?)">/g, "<br>").replace(/(<br>){3,}/g, "<br><br>");
         draw(cfx[c].firstChild.firstChild);
     }
 }
@@ -44,7 +46,7 @@ var SMcheckForMsg = setInterval(function() {
     var SMmsgWindow = document.getElementById('ChatTabsPagelet');
     if (SMmsgWindow !== null) {
         console.log('found!');
-        SMcode();
+        SMinitialDraw();
         SMmonospaceListen(SMmsgWindow, SMobserverConfig);
         clearInterval(SMcheckForMsg);
     }
