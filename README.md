@@ -5,6 +5,8 @@ Display monospaced text blocks instantly in Chrome!
 Autodetect syntax highlighting support for 112 languages courtesy of
 [highlightjs](https://highlightjs.org/).
 
+Download in the [webstore](https://chrome.google.com/webstore/detail/monospace/bjeojhoaeoiaokmhbhnmnkfehhmmnafg) now.
+
 Currently only supports Facebook chat and certain files viewed using Chrome.
 
 Roadmap:
